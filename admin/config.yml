@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+publish_mode: simple
+
+collections:
+  - name: "site"
+    label: "Website Settings"
+    files:
+      - label: "Goodys Textile Settings"
+        name: "settings"
+        file: "content/site.json"
+        format: "json"
+        fields:
+          - {label: "Brand Name", name: "brand_name", widget: "string"}
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Location", name: "location", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "WhatsApp Number", name: "whatsapp", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Text", name: "hero_text", widget: "text"}
+          - {label: "About Title", name: "about_title", widget: "string"}
+          - {label: "About Text", name: "about_text", widget: "text"}
+
+  - name: "catalogue"
+    label: "Fabric Catalogue"
+    files:
+      - label: "Products"
+        name: "products"
+        file: "content/products.json"
+        format: "json"
+        fields:
+          - label: "Products"
+            name: "products"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.category}}"
+            fields:
+              - {label: "Product Name", name: "title", widget: "string"}
+              - {label: "Category", name: "category", widget: "string"}
+              - {label: "Product Image", name: "image", widget: "image"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Featured", name: "featured", widget: "boolean", default: false}
+              - {label: "Availability / Status", name: "status", widget: "string"}
+              - {label: "WhatsApp Message", name: "whatsapp_text", widget: "text"}

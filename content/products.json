@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "title": "Blue Floral Designer",
+      "category": "Designer Fabrics",
+      "image": "/assets/designer-floral.jpg",
+      "description": "A bold floral designer fabric with deep blue, cream and warm red accents.",
+      "featured": true,
+      "status": "Available \u2014 confirm current stock",
+      "whatsapp_text": "Hello Goodys Textile, I am interested in the Blue Floral Designer fabric."
+    },
+    {
+      "title": "Green Patterned Designer",
+      "category": "Designer Fabrics",
+      "image": "/assets/designer-green.jpg",
+      "description": "A clean white-and-green patterned designer fabric for distinctive fashion pieces.",
+      "featured": true,
+      "status": "Available \u2014 confirm current stock",
+      "whatsapp_text": "Hello Goodys Textile, I am interested in the Green Patterned Designer fabric."
+    },
+    {
+      "title": "Satin Designers",
+      "category": "Satin Designers",
+      "image": "/assets/designer-floral.jpg",
+      "description": "Premium designer satin options, including Flowerish Original Satin and related styles.",
+      "featured": false,
+      "status": "Ask for current selection",
+      "whatsapp_text": "Hello Goodys Textile, please show me your current Satin Designers selection."
+    },
+    {
+      "title": "Premium Suiting",
+      "category": "Super 100 & Super 360",
+      "image": "/assets/store-interior.jpg",
+      "description": "Premium suiting fabrics for polished tailoring and formal wear.",
+      "featured": false,
+      "status": "Ask for current selection",
+      "whatsapp_text": "Hello Goodys Textile, I am interested in Super 100 and Super 360 suiting fabrics."
+    }
+  ]
+}
