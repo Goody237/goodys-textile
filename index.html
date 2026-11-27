@@ -4,13 +4,20 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Goodys Textile — Luxury Fabrics, Endless Possibilities</title>
 <meta name="description" content="Goodys Textile — premium fabrics in Bamenda Main Market, Cameroon. Retail and wholesale fabrics for designers, tailors, bridal, event and corporate wear.">
+<meta property="og:title" content="Goodys Textile — Luxury Fabrics, Endless Possibilities">
+<meta property="og:description" content="Goodys Textile — premium fabrics in Bamenda Main Market, Cameroon.">
+<meta property="og:image" content="">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="nav">
   <a class="brand" href="#home"><span class="brand-mark">GT</span><span><strong id="brandName">Goodys</strong><small>TEXTILE</small></span></a>
-  <button class="menu" aria-label="Menu">☰</button>
-  <nav><a href="#collections">Collections</a><a href="#catalogue">Catalogue</a><a href="#why">Why Goodys</a><a href="#wholesale">Wholesale</a><a href="#contact">Contact</a></nav>
+  <button class="menu" type="button" aria-label="Open navigation menu" aria-controls="primaryNavigation" aria-expanded="false">☰</button>
+  <nav id="primaryNavigation"><a href="#collections">Collections</a><a href="#catalogue">Catalogue</a><a href="#why">Why Goodys</a><a href="#wholesale-quote">Wholesale Quote</a><a href="#contact">Contact</a></nav>
+  <button id="cartTrigger" class="cart-trigger" type="button" aria-label="Open shopping cart" aria-haspopup="dialog" aria-controls="cartDrawer">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L21 9H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+    <span>Cart</span><span id="cartCount" class="cart-count" aria-live="polite">0</span>
+  </button>
   <a class="nav-cta" id="navWhatsApp" target="_blank" rel="noopener">WhatsApp Us</a>
 </header>
 
@@ -42,9 +49,54 @@
 </section>
 
 <section id="catalogue" class="section catalogue">
-  <div class="section-head"><div><p class="eyebrow">LIVE CATALOGUE</p><h2>Featured fabrics</h2></div><p class="catalogue-note">Stock changes. Confirm availability before payment.</p></div>
-  <div id="products" class="products"><p class="loading">Loading catalogue…</p></div>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">GOODYS TEXTILE COLLECTION</p>
+      <h2>Explore our fabrics</h2>
+    </div>
+    <p class="catalogue-note">
+      Browse our selection and contact us to confirm prices and availability.
+    </p>
+  </div>
+
+  <div class="catalogue-toolbar">
+    <div class="catalogue-search">
+      <label for="productSearch">Search fabrics</label>
+      <input
+        type="search"
+        id="productSearch"
+        placeholder="Search by fabric name..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="catalogue-filter">
+      <label for="categoryFilter">Category</label>
+      <select id="categoryFilter">
+        <option value="all">All categories</option>
+      </select>
+    </div>
+
+    <div class="catalogue-sort">
+      <label for="productSort">Sort by</label>
+      <select id="productSort">
+        <option value="featured">Featured first</option>
+        <option value="name-asc">Name: A to Z</option>
+        <option value="name-desc">Name: Z to A</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="catalogue-results">
+    <p id="availabilitySyncNotice" class="availability-sync-notice" role="status" aria-live="polite" hidden></p>
+    <p id="catalogueCount" aria-live="polite">Loading fabrics...</p>
+  </div>
+
+  <div id="products" class="products" aria-live="polite">
+    <p class="loading">Loading catalogue...</p>
+  </div>
 </section>
+
 
 <section id="why" class="split">
   <div class="split-image"><img src="assets/store-interior.jpg" alt="Goodys Textile fabric selection"></div>
@@ -60,53 +112,1969 @@
 
 <section id="wholesale" class="banner"><div><p class="eyebrow">FOR DESIGNERS & BUSINESSES</p><h2>Building a collection?<br>Let's talk wholesale.</h2></div><a class="button light" id="wholesaleWhatsApp" target="_blank" rel="noopener">Discuss Wholesale</a></section>
 
+<section id="wholesale-quote" class="wholesale-quote" aria-labelledby="wholesaleQuoteTitle">
+  <div class="wholesale-intro">
+    <p class="eyebrow">FOR BUSINESSES & BULK ENQUIRIES</p>
+    <h2 id="wholesaleQuoteTitle">Request a wholesale quote</h2>
+    <p>Select fabrics and provide the requested quantities. Goodys Textile will confirm wholesale pricing and availability. This request is not a confirmed order.</p>
+  </div>
+  <div class="wholesale-layout">
+    <div class="wholesale-browse">
+      <div class="wholesale-toolbar">
+        <div>
+          <label for="wholesaleSearch">Search fabrics</label>
+          <input id="wholesaleSearch" type="search" autocomplete="off">
+        </div>
+        <div>
+          <label for="wholesaleCategoryFilter">Category</label>
+          <select id="wholesaleCategoryFilter">
+            <option value="all">All categories</option>
+          </select>
+        </div>
+      </div>
+      <p id="wholesaleCatalogueStatus" class="wholesale-status" role="status" aria-live="polite">Loading catalogue...</p>
+      <div id="wholesaleProducts" class="wholesale-products" aria-live="polite"></div>
+    </div>
+    <aside class="wholesale-request-panel" aria-labelledby="wholesaleSelectionTitle">
+      <p class="eyebrow">YOUR REQUEST</p>
+      <h3 id="wholesaleSelectionTitle">Selected fabrics</h3>
+      <p id="wholesaleSelectionCount" class="wholesale-selection-count">0 fabrics selected</p>
+      <div id="wholesaleSelectedItems" class="wholesale-selected-items"></div>
+      <form id="wholesaleCustomerForm" class="wholesale-customer-form" novalidate>
+        <h4>Business contact details</h4>
+        <div class="wholesale-customer-grid">
+          <div class="wholesale-field">
+            <label for="wholesaleFullName">Full name <span>*</span></label>
+            <input id="wholesaleFullName" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="wholesale-field">
+            <label for="wholesalePhone">Phone number <span>*</span></label>
+            <input id="wholesalePhone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="wholesale-field wholesale-field-wide">
+            <label for="wholesaleBusiness">Business or company name</label>
+            <input id="wholesaleBusiness" name="business" type="text" autocomplete="organization">
+          </div>
+          <div class="wholesale-field wholesale-field-wide">
+            <label for="wholesaleLocation">Location <span>*</span></label>
+            <input id="wholesaleLocation" name="location" type="text" autocomplete="address-level2" required>
+          </div>
+          <div class="wholesale-field wholesale-field-wide">
+            <label for="wholesaleRequirements">Additional requirements or message</label>
+            <textarea id="wholesaleRequirements" name="requirements" rows="3" maxlength="1000"></textarea>
+          </div>
+        </div>
+        <p id="wholesaleFormStatus" class="wholesale-form-status" role="status" aria-live="polite"></p>
+        <button id="wholesaleSubmit" class="button gold wholesale-submit" type="submit" disabled>Submit Wholesale Quote Request</button>
+      </form>
+    </aside>
+  </div>
+</section>
+
 <section id="contact" class="contact"><div><p class="eyebrow">VISIT GOODYS TEXTILE</p><h2>Come find your next fabric.</h2><p>Goodys Textile is located at <strong id="location"></strong></p></div>
 <div class="contact-card"><p><span>WhatsApp / Phone</span><a id="phone" href=""></a></p><p><span>Business</span><strong>Retail & Wholesale Fabrics</strong></p><a class="button gold full" id="contactWhatsApp" target="_blank" rel="noopener">Message Goodys Textile</a></div></section>
 </main>
-<footer><div class="brand"><span class="brand-mark">GT</span><span><strong>Goodys</strong><small>TEXTILE</small></span></div><p>Luxury Fabrics, Endless Possibilities.</p><small>© 2026 Goodys Textile · Bamenda Main Market, Cameroon.</small></footer>
+<dialog id="productModal" class="product-modal" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+  <div class="product-modal-shell">
+    <button class="product-modal-close" type="button" aria-label="Close product details">×</button>
+    <div class="product-modal-media">
+      <img id="modalImage" src="" alt="" width="800" height="330" loading="eager" decoding="async">
+    </div>
+    <div class="product-modal-content">
+      <p id="modalCategory" class="product-modal-category"></p>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription" class="product-modal-description"></p>
+      <p id="modalStatus" class="product-modal-status"></p>
+      <dl id="modalDetails" class="product-modal-details"></dl>
+      <div id="modalQuantityField" class="modal-quantity-field" hidden>
+        <label id="modalQuantityLabel" for="modalQuantityInput">Quantity</label>
+        <div class="modal-quantity-control">
+          <input id="modalQuantityInput" class="modal-quantity-input" type="number" inputmode="decimal" aria-describedby="modalQuantityError">
+          <span id="modalQuantityUnit" class="cart-quantity-unit"></span>
+        </div>
+        <p id="modalQuantityError" class="quantity-validation-error" role="alert" hidden></p>
+      </div>
+      <button id="modalAddToCart" class="button gold product-modal-add" type="button">Add to cart</button>
+      <p id="modalCartFeedback" class="modal-cart-feedback" role="status" aria-live="polite"></p>
+      <a id="modalWhatsApp" class="button gold product-modal-enquiry" target="_blank" rel="noopener">Enquire on WhatsApp →</a>
+    </div>
+  </div>
+</dialog>
+<dialog id="cartDrawer" class="cart-drawer" aria-labelledby="cartTitle" aria-describedby="cartDescription">
+  <div class="cart-drawer-shell">
+    <header class="cart-drawer-header">
+      <div><p class="eyebrow">YOUR SELECTION</p><h2 id="cartTitle">Shopping cart</h2></div>
+      <button id="cartClose" class="cart-close" type="button" aria-label="Close shopping cart">×</button>
+    </header>
+    <p id="cartDescription" class="cart-description">Review your fabrics and send an order enquiry to Goodys Textile.</p>
+    <p id="cartNotice" class="cart-notice" role="status" aria-live="polite"></p>
+    <div class="cart-scroll-content">
+      <div id="cartItems" class="cart-items"></div>
+      <form id="cartCustomerForm" class="cart-customer-form" novalidate>
+        <h3>Customer information</h3>
+        <p class="cart-form-help">Required fields are marked *. A delivery address is required for delivery and optional for shop pickup.</p>
+        <div class="cart-customer-grid">
+          <div class="cart-field">
+            <label for="customerFullName">Full name <span aria-hidden="true">*</span></label>
+            <input id="customerFullName" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="cart-field">
+            <label for="customerPhone">Phone number <span aria-hidden="true">*</span></label>
+            <input id="customerPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+          </div>
+          <div class="cart-field cart-field-wide">
+            <label for="fulfillmentMethod">Fulfilment method <span aria-hidden="true">*</span></label>
+            <select id="fulfillmentMethod" name="fulfillment" required>
+              <option value="">Choose delivery or shop pickup</option>
+              <option value="delivery">Delivery</option>
+              <option value="pickup">Shop pickup</option>
+            </select>
+          </div>
+          <div class="cart-field cart-field-wide">
+            <label for="customerAddress">Delivery address / location <span id="addressRequiredMark" aria-hidden="true" hidden>*</span></label>
+            <textarea id="customerAddress" name="address" autocomplete="street-address" rows="2" aria-describedby="customerAddressHelp"></textarea>
+            <small id="customerAddressHelp">Required for delivery; optional for shop pickup.</small>
+          </div>
+          <div class="cart-field cart-field-wide">
+            <label for="customerOrderNote">Additional order note <span>(optional)</span></label>
+            <textarea id="customerOrderNote" name="note" rows="2" maxlength="1000"></textarea>
+          </div>
+        </div>
+        <p id="customerFormNotice" class="cart-form-notice" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cart-summary">
+      <p><span>Subtotal</span><strong id="cartSubtotal">—</strong></p>
+      <p class="cart-total"><span>Product total</span><strong id="cartTotal">—</strong></p>
+      <small>Prices and availability must be confirmed by Goodys Textile. No additional charges are included.</small>
+      <button id="cartCheckout" class="button gold cart-checkout" type="button" disabled>Continue on WhatsApp</button>
+    </div>
+  </div>
+</dialog>
+<footer><div class="brand"><span class="brand-mark">GT</span><span><strong id="footerBrandName">Goodys</strong><small>TEXTILE</small></span></div><p id="footerTagline">Luxury Fabrics, Endless Possibilities</p><nav class="footer-social-links" id="footerSocialLinks" aria-label="Social media"></nav><a id="footerEmail" hidden></a><small id="footerCopyright">© 2026 Goodys Textile · Bamenda Main Market, Cameroon.</small></footer>
 
-<script>
+<script type="module">
+import { configureCurrency, formatCurrency } from './content/currency.js';
+
 const wa=(number,msg)=>`https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
 const loadJson=path=>fetch(path).then(r=>{
   if(!r.ok) throw new Error(`Could not load ${path}`);
   return r.json();
 });
-const siteSettings=loadJson('content/site.json');
+const siteSettings=loadSiteSettings();
+const statusLabels={
+  in_stock:'IN STOCK',
+  out_of_stock:'OUT OF STOCK',
+  unconfirmed:'AVAILABILITY TO BE CONFIRMED'
+};
+const cartStorageKey='goodys-textile-cart-v1';
+let catalogueWhatsappNumber='';
+let catalogueProducts=[];
+let cartEntries=[];
+let refreshCatalogueAvailability=async()=>{};
+const wholesaleSelection=new Map();
+let cartStorageAvailable=true;
+let cartTriggerElement=null;
+let productModalTrigger=null;
+let currentSiteSettings=null;
+
+async function loadSiteSettings(){
+  const defaults=await loadJson('content/site.json');
+  try{
+    const config=await import('./content/supabase-public-config.js');
+    const baseUrl=typeof config.SUPABASE_URL==='string'
+      ? config.SUPABASE_URL.replace(/\/+$/,'')
+      : '';
+    const key=typeof config.SUPABASE_PUBLISHABLE_KEY==='string'
+      ? config.SUPABASE_PUBLISHABLE_KEY.trim()
+      : '';
+    if(!/^https:\/\/[^/]+\.supabase\.co$/i.test(baseUrl) ||
+       !key ||
+       /YOUR_|REPLACE_ME|PLACEHOLDER|^sb_secret_/i.test(baseUrl+key)){
+      throw new Error('Public Supabase configuration is invalid.');
+    }
+
+    const response=await fetch(
+      `${baseUrl}/rest/v1/storefront_settings_public?select=setting_key,setting_value`,
+      {
+        headers:{apikey:key,Authorization:`Bearer ${key}`},
+        cache:'no-store'
+      }
+    );
+    if(!response.ok) throw new Error(`Public settings request failed (HTTP ${response.status}).`);
+    const rows=await response.json();
+    const remoteSettings=Object.fromEntries(
+      rows
+        .filter(row=>row && typeof row.setting_key==='string')
+        .map(row=>[row.setting_key,row.setting_value])
+    );
+    return {...defaults,...remoteSettings};
+  }catch(error){
+    console.warn('Supabase storefront settings unavailable; local defaults are active.',error);
+    return defaults;
+  }
+}
+
+function applyImageFallback(image){
+  if(image.dataset.fallbackApplied==='true') return;
+  image.dataset.fallbackApplied='true';
+  image.src='/assets/store-interior.jpg';
+}
+
 async function loadSite(){
   try{
     const s=await siteSettings;
+    currentSiteSettings=s;
+    configureCurrency({
+      code:s.currency_code,
+      label:s.currency_label,
+      locale:s.currency_locale
+    });
     document.title=`${s.brand_name} — ${s.tagline}`;
+    const description=document.querySelector('meta[name="description"]');
+    if(description && typeof s.seo_description==='string' && s.seo_description.trim()){
+      description.content=s.seo_description.trim();
+    }
+    if(typeof s.seo_title==='string' && s.seo_title.trim()){
+      document.title=s.seo_title.trim();
+    }
+    const socialTitle=document.querySelector('meta[property="og:title"]');
+    const socialDescription=document.querySelector('meta[property="og:description"]');
+    const socialImage=document.querySelector('meta[property="og:image"]');
+    if(socialTitle) socialTitle.content=document.title;
+    if(socialDescription && description) socialDescription.content=description.content;
+    if(socialImage && typeof s.seo_image_url==='string' && /^https:\/\//i.test(s.seo_image_url)){
+      socialImage.content=s.seo_image_url;
+    }
+    if(typeof s.accent_color==='string' && /^#[0-9a-f]{6}$/i.test(s.accent_color)){
+      document.documentElement.style.setProperty('--gold',s.accent_color);
+    }
     document.getElementById('brandName').textContent=s.brand_name.replace(/\s+Textile/i,'');
-    document.getElementById('heroTitle').innerHTML=s.hero_title.replace('.', '.<br><em>').replace(/$/, '</em>');
+    document.getElementById('footerBrandName').textContent=s.brand_name.replace(/\s+Textile/i,'');
+    document.getElementById('footerTagline').textContent=s.tagline;
+    document.getElementById('catalogue').querySelector('.catalogue-note').textContent=
+      s.catalogue_message || 'Browse our selection and contact us to confirm prices and availability.';
+    document.getElementById('footerCopyright').textContent=`© 2026 ${s.brand_name} · ${s.location}.`;
+    const heroTitle=document.getElementById('heroTitle');
+    heroTitle.replaceChildren();
+    if(typeof s.hero_title==='string'){
+      const heroMatch=s.hero_title.match(/^([^.!?]+[.!?])\s*(.+)$/);
+      if(heroMatch){
+        heroTitle.append(
+          document.createTextNode(heroMatch[1]),
+          document.createElement('br')
+        );
+        const emphasis=document.createElement('em');
+        emphasis.textContent=heroMatch[2];
+        heroTitle.appendChild(emphasis);
+      }else{
+        heroTitle.textContent=s.hero_title;
+      }
+    }
     document.getElementById('heroText').textContent=s.hero_text;
-    document.getElementById('aboutTitle').innerHTML=s.about_title.replace('. ', '.<br>');
+    const aboutTitle=document.getElementById('aboutTitle');
+    aboutTitle.replaceChildren();
+    if(typeof s.about_title==='string'){
+      const aboutMatch=s.about_title.match(/^(.+?[.!?])\s+(.+)$/);
+      if(aboutMatch){
+        aboutTitle.append(
+          document.createTextNode(aboutMatch[1]),
+          document.createElement('br'),
+          document.createTextNode(aboutMatch[2])
+        );
+      }else{
+        aboutTitle.textContent=s.about_title;
+      }
+    }
     document.getElementById('aboutText').textContent=s.about_text;
     document.getElementById('location').textContent=s.location;
     const phone=document.getElementById('phone'); phone.textContent=s.phone; phone.href=`tel:+${s.whatsapp}`;
+    const footerEmail=document.getElementById('footerEmail');
+    if(typeof s.contact_email==='string' && s.contact_email.trim()){
+      footerEmail.href=`mailto:${s.contact_email.trim()}`;
+      footerEmail.textContent=s.contact_email.trim();
+      footerEmail.hidden=false;
+    }else{
+      footerEmail.hidden=true;
+    }
+    const socialLinks=document.getElementById('footerSocialLinks');
+    socialLinks.replaceChildren();
+    [
+      ['facebook_url','Facebook'],
+      ['instagram_url','Instagram'],
+      ['tiktok_url','TikTok']
+    ].forEach(([key,label])=>{
+      if(typeof s[key]!=='string' || !/^https:\/\//i.test(s[key])) return;
+      const link=document.createElement('a');
+      link.href=s[key];
+      link.target='_blank';
+      link.rel='noopener noreferrer';
+      link.textContent=label;
+      socialLinks.appendChild(link);
+    });
     const links=[
       ['navWhatsApp','Hello Goodys Textile, I would like to make an enquiry.'],
       ['heroWhatsApp','Hello Goodys Textile, I am looking for a fabric.'],
       ['stockWhatsApp','Hello Goodys Textile, please send me your current fabric selection.'],
-      ['wholesaleWhatsApp','Hello Goodys Textile, I am interested in wholesale fabric supply.'],
+      ['wholesaleWhatsApp',s.wholesale_whatsapp_message || 'Hello Goodys Textile, I am interested in wholesale fabric supply.'],
       ['contactWhatsApp','Hello Goodys Textile, I would like to visit or make an order.']
     ];
     links.forEach(([id,msg])=>document.getElementById(id).href=wa(s.whatsapp,msg));
   }catch(e){console.warn('Site settings fallback active',e)}
 }
+
 async function loadProducts(){
-  const box=document.getElementById('products');
-  try{
-    const [data,site]=await Promise.all([loadJson('content/products.json'),siteSettings]);
-    box.innerHTML=data.products.map(p=>`
-      <article class="product">
-        <div class="product-image"><img src="${p.image}" alt="${p.title}"><span>${p.category}</span></div>
-        <div class="product-copy"><h3>${p.title}</h3><p>${p.description}</p><small>${p.status}</small>
-        <a class="product-link" target="_blank" rel="noopener" href="${wa(site.whatsapp,p.whatsapp_text)}">Enquire on WhatsApp →</a></div>
-      </article>`).join('');
-  }catch(e){box.innerHTML='<p>Catalogue temporarily unavailable. Please contact Goodys Textile on WhatsApp.</p>'}
+  const box = document.getElementById('products');
+  const searchInput = document.getElementById('productSearch');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const sortSelect = document.getElementById('productSort');
+  const count = document.getElementById('catalogueCount');
+
+  let products = [];
+
+  const supportedStockStatuses=['in_stock','out_of_stock'];
+  const fallbackImage='/assets/store-interior.jpg';
+  const catalogueFields=[
+    'id',
+    'sku',
+    'title',
+    'category',
+    'description',
+    'image_url',
+    'gallery',
+    'featured',
+    'selling_unit',
+    'price',
+    'minimum_quantity',
+    'quantity_step',
+    'stock_status'
+  ].join(',');
+  const uuidPattern=/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
+
+  function stringOrFallback(value, fallback){
+    return typeof value==='string' && value.trim()
+      ? value.trim()
+      : fallback;
+  }
+
+  function genuineText(value){
+    if(typeof value==='string'){
+      const text=value.trim();
+      return text ? text : null;
+    }
+    if(typeof value==='number' && Number.isFinite(value) && value>0){
+      return String(value);
+    }
+    return null;
+  }
+
+  function normalizePrice(value){
+    if(typeof value==='number' && Number.isFinite(value) && value>=0){
+      return value;
+    }
+    if(typeof value==='string' && value.trim()){
+      const price=Number(value.trim());
+      return Number.isFinite(price) && price>=0 ? price : null;
+    }
+    return null;
+  }
+
+  function normalizeQuantity(value,allowZero){
+    if(typeof value==='string' && value.trim()){
+      value=Number(value.trim());
+    }
+    return typeof value==='number' && Number.isFinite(value) &&
+      (allowZero ? value>=0 : value>0)
+      ? value
+      : null;
+  }
+
+  function safeImageUrl(value){
+    if(typeof value!=='string') return null;
+    const url=value.trim();
+    return /^(\/|\.\/|https?:\/\/)/i.test(url) &&
+      !/^(javascript|data):/i.test(url)
+      ? url
+      : null;
+  }
+
+  function normalizeProduct(product){
+    if(!product || typeof product !== 'object') return null;
+
+    const title=stringOrFallback(product.title,'Fabric details available');
+    const category=stringOrFallback(product.category,'Uncategorised');
+    const description=stringOrFallback(product.description,'Details available on request.');
+    const gallery=Array.isArray(product.gallery)
+      ? product.gallery.map(safeImageUrl).filter(Boolean)
+      : [];
+    const image=safeImageUrl(product.image_url) ||
+      safeImageUrl(product.image) ||
+      gallery[0] ||
+      fallbackImage;
+    const stockStatus=supportedStockStatuses.includes(product.stock_status)
+      ? product.stock_status
+      : 'unconfirmed';
+
+    return {
+      id:typeof product.id==='string' && uuidPattern.test(product.id)
+        ? product.id.toLowerCase()
+        : null,
+      title,
+      category,
+      description,
+      image,
+      gallery,
+      featured:product.featured===true,
+      stock_status:stockStatus,
+      sku:genuineText(product.sku),
+      selling_unit:genuineText(product.selling_unit),
+      price:normalizePrice(product.price),
+      pricing_synced:true,
+      quantity_step:normalizeQuantity(product.quantity_step,false),
+      minimum_quantity:normalizeQuantity(product.minimum_quantity,true),
+      whatsapp_text:`Hello Goodys Textile, I am interested in ${title}.`
+    };
+  }
+
+  async function loadPublicCatalogue(){
+    const config=await import('./content/supabase-public-config.js');
+    const baseUrl=typeof config.SUPABASE_URL==='string'
+      ? config.SUPABASE_URL.replace(/\/+$/,'')
+      : '';
+    const key=typeof config.SUPABASE_PUBLISHABLE_KEY==='string'
+      ? config.SUPABASE_PUBLISHABLE_KEY.trim()
+      : '';
+    if(!/^https:\/\/[^/]+\.supabase\.co$/i.test(baseUrl) ||
+       !key ||
+       /YOUR_|REPLACE_ME|PLACEHOLDER|^sb_secret_/i.test(baseUrl+key)){
+      throw new Error('The public Supabase configuration is invalid.');
+    }
+    if(key.startsWith('eyJ')){
+      const payload=key.split('.')[1];
+      if(!payload) throw new Error('The public Supabase key is invalid.');
+      const decoded=JSON.parse(atob(payload.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(payload.length/4)*4,'=')));
+      if(decoded.role==='service_role') throw new Error('A service-role key cannot be used by the storefront.');
+    }
+
+    const pageSize=1000;
+    const allRows=[];
+    let offset=0;
+    let totalRows=null;
+    while(true){
+      const endpoint=new URL(`${baseUrl}/rest/v1/catalogue_availability`);
+      endpoint.searchParams.set('select',catalogueFields);
+      endpoint.searchParams.set('order','id.asc');
+      endpoint.searchParams.set('limit',String(pageSize));
+      endpoint.searchParams.set('offset',String(offset));
+      const response=await fetch(endpoint.href,{
+        headers:{
+          apikey:key,
+          Accept:'application/json',
+          Prefer:'count=exact'
+        },
+        cache:'no-store'
+      });
+      if(!response.ok) throw new Error(`Catalogue request failed (${response.status}).`);
+
+      const rows=await response.json();
+      if(!Array.isArray(rows) || rows.length>pageSize){
+        throw new Error('Catalogue response has an invalid format.');
+      }
+      const range=response.headers.get('content-range') || '';
+      const rangeMatch=/^(?:(\d+)-(\d+)|\*)\/(\d+|\*)$/.exec(range.trim());
+      if(!rangeMatch){
+        throw new Error('Catalogue pagination could not be verified from the response.');
+      }
+      const start=rangeMatch[1]===undefined ? null : Number(rangeMatch[1]);
+      const end=rangeMatch[2]===undefined ? null : Number(rangeMatch[2]);
+      const reportedTotal=rangeMatch[3]==='*' ? null : Number(rangeMatch[3]);
+      if(reportedTotal!==null){
+        if(totalRows!==null && reportedTotal!==totalRows){
+          throw new Error('Catalogue changed while it was being paginated; retry the request.');
+        }
+        totalRows=reportedTotal;
+      }
+
+      if(rows.length===0){
+        if(totalRows!==null && offset<totalRows){
+          throw new Error('Catalogue pagination ended before all products were retrieved.');
+        }
+        break;
+      }
+      if(start!==offset || end-start+1!==rows.length){
+        throw new Error('Catalogue pagination returned an unexpected range.');
+      }
+
+      allRows.push(...rows);
+      offset=end+1;
+      if(totalRows!==null && offset>=totalRows) break;
+    }
+
+    const requiredFields=catalogueFields.split(',');
+    const hasField=(row,field)=>Object.prototype.hasOwnProperty.call(row,field);
+    const validPrice=value=>value===null ||
+      typeof value==='number' && Number.isFinite(value) && value>=0 ||
+      typeof value==='string' && value.trim() &&
+        Number.isFinite(Number(value)) && Number(value)>=0;
+    if(allRows.some(row=>!row || typeof row!=='object' ||
+       typeof row.id!=='string' || !uuidPattern.test(row.id) ||
+       !requiredFields.every(field=>hasField(row,field)) ||
+       !validPrice(row.price))){
+      throw new Error('Catalogue response has invalid product data.');
+    }
+    return allRows;
+  }
+
+  async function loadLegacyCartIdMap(){
+    try{
+      const data=await loadJson('content/products.json');
+      if(!Array.isArray(data.products)) throw new Error('Invalid legacy product data.');
+      return new Map(data.products
+        .filter(product=>product && typeof product.id==='string' &&
+          typeof product.supabase_id==='string' && uuidPattern.test(product.supabase_id))
+        .map(product=>[product.id,product.supabase_id.toLowerCase()]));
+    }catch(error){
+      console.warn('Legacy cart product IDs could not be mapped:',error);
+      return new Map();
+    }
+  }
+
+  function refreshCategoryOptions(categories){
+    const updateSelect=(select,allLabel)=>{
+      const selected=select.value;
+      const allOption=document.createElement('option');
+      allOption.value='all';
+      allOption.textContent=allLabel;
+      select.replaceChildren(allOption);
+      categories.forEach(name=>{
+        const option=document.createElement('option');
+        option.value=name;
+        option.textContent=name;
+        select.appendChild(option);
+      });
+      select.value=categories.includes(selected)?selected:'all';
+    };
+    updateSelect(categoryFilter,'All categories');
+    updateSelect(wholesaleCategoryFilter,'All categories');
+  }
+
+  function updateCatalogueViews(){
+    catalogueProducts=products;
+    const categories=[...new Set(
+      products.map(product=>product.category).filter(Boolean)
+    )].sort();
+    const notice=document.getElementById('availabilitySyncNotice');
+    const hasUnconfirmedAvailability=products.some(
+      product=>product.stock_status==='unconfirmed'
+    );
+    notice.textContent=hasUnconfirmedAvailability
+      ? 'Availability is not confirmed for some products. Please contact Goodys Textile before purchase.'
+      : '';
+    notice.hidden=!hasUnconfirmedAvailability;
+    refreshCategoryOptions(categories);
+    renderProducts();
+    renderCart();
+    renderWholesaleCatalogue();
+    renderWholesaleSelection();
+  }
+
+  async function refreshLiveCatalogue(){
+    try{
+      products=(await loadPublicCatalogue())
+        .map(normalizeProduct)
+        .filter(Boolean);
+    }catch(error){
+      console.warn('Live catalogue could not be refreshed:',error);
+      products.forEach(product=>{
+        product.stock_status='unconfirmed';
+        product.pricing_synced=false;
+      });
+    }
+    updateCatalogueViews();
+  }
+
+  function renderProducts(){
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const selectedCategory = categoryFilter.value;
+    const sortMode = sortSelect.value;
+
+    let filtered = products.filter(product => {
+      const title = String(product.title || '');
+      const category = String(product.category || '');
+      const description = String(product.description || '');
+
+      const matchesSearch =
+        title.toLowerCase().includes(searchTerm) ||
+        category.toLowerCase().includes(searchTerm) ||
+        description.toLowerCase().includes(searchTerm);
+
+      const matchesCategory =
+        selectedCategory === 'all' ||
+        category === selectedCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    if(sortMode === 'name-asc'){
+      filtered.sort((a,b) =>
+        String(a.title || '').localeCompare(String(b.title || ''),
+        undefined,{sensitivity:'base'})
+      );
+    } else if(sortMode === 'name-desc'){
+      filtered.sort((a,b) =>
+        String(b.title || '').localeCompare(String(a.title || ''),
+        undefined,{sensitivity:'base'})
+      );
+    } else {
+      filtered.sort((a,b) =>
+        Number(Boolean(b.featured)) - Number(Boolean(a.featured))
+      );
+    }
+
+    count.textContent =
+      `${filtered.length} fabric${filtered.length === 1 ? '' : 's'} found`;
+
+    box.replaceChildren();
+
+    if(filtered.length === 0){
+      const empty = document.createElement('p');
+      empty.className = 'loading';
+      empty.textContent =
+        'No fabrics match your search. Try another name or category.';
+      box.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach(product => {
+      const article = document.createElement('article');
+      article.className = 'product';
+      const detailsButton=document.createElement('button');
+      detailsButton.type='button';
+      detailsButton.className='product-open';
+      detailsButton.setAttribute('aria-haspopup','dialog');
+      detailsButton.setAttribute('aria-controls','productModal');
+      detailsButton.setAttribute('aria-label',`View details for ${product.title}`);
+
+      const imageWrap = document.createElement('div');
+      imageWrap.className = 'product-image';
+
+      const image = document.createElement('img');
+      image.src = product.image;
+      image.alt = product.title;
+      image.loading = 'lazy';
+      image.width = 800;
+      image.height = 330;
+      image.decoding = 'async';
+      image.addEventListener('error',()=>applyImageFallback(image));
+
+      const category = document.createElement('span');
+      category.textContent = product.category;
+
+      imageWrap.append(image, category);
+
+      const copy = document.createElement('div');
+      copy.className = 'product-copy';
+
+      const title = document.createElement('h3');
+      title.textContent = product.title;
+
+      const description = document.createElement('p');
+      description.textContent = product.description;
+
+      const price = document.createElement('p');
+      price.className = 'product-price';
+      price.textContent = !product.pricing_synced
+        ? 'Price unavailable; please contact us'
+        : product.price === null
+          ? 'Price to be confirmed'
+          : `${displayPrice(product.price)} / ${product.selling_unit || 'unit to be confirmed'}`;
+
+      const minimum = document.createElement('p');
+      minimum.className = 'product-minimum';
+      minimum.textContent = !product.pricing_synced
+        ? 'Minimum order: unavailable'
+        : typeof product.minimum_quantity === 'number'
+          ? `Minimum order: ${formatQuantity(product.minimum_quantity)} ${product.selling_unit || 'unit to be confirmed'}`
+          : 'Minimum order: To be confirmed';
+
+      const status = document.createElement('small');
+      status.textContent=statusLabels[product.stock_status] || statusLabels.unconfirmed;
+
+      const link = document.createElement('a');
+      link.className = 'product-link';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.href = wa(
+        catalogueWhatsappNumber,
+        product.whatsapp_text ||
+        `Hello Goodys Textile, I am interested in ${product.title}.`
+      );
+      link.textContent = 'Enquire on WhatsApp →';
+
+      copy.append(title, description, price, minimum, status);
+      detailsButton.append(imageWrap,copy);
+      detailsButton.addEventListener('click',()=>{
+        openProductModal(product,detailsButton);
+      });
+
+      const actions=document.createElement('div');
+      actions.className='product-actions';
+      const addButton=document.createElement('button');
+      addButton.type='button';
+      addButton.className='product-add';
+      addButton.textContent='Add to cart';
+      addButton.setAttribute('aria-label',`Add ${product.title} to cart`);
+      addButton.addEventListener('click',()=>{
+        addProductToCart(product);
+      });
+
+      if(isUnavailable(product)){
+        addButton.disabled=true;
+        addButton.textContent=product.stock_status==='out_of_stock'
+          ? 'OUT OF STOCK'
+          : 'Confirm availability';
+        addButton.title=availabilityBlockMessage(product,'added to the cart');
+      }else if(!product.id){
+        addButton.disabled=true;
+        addButton.textContent='Unavailable';
+        addButton.title='This fabric cannot be added without a product identifier.';
+      }
+
+      actions.append(link,addButton);
+      article.append(detailsButton,actions);
+      box.appendChild(article);
+    });
+  }
+
+  try {
+    const [rows, site, legacyCartIdMap] = await Promise.all([
+      loadPublicCatalogue(),
+      siteSettings,
+      loadLegacyCartIdMap()
+    ]);
+
+    products = rows
+      .map(normalizeProduct)
+      .filter(Boolean);
+    catalogueProducts=products;
+    catalogueWhatsappNumber = site.whatsapp;
+    restoreCart(products,legacyCartIdMap);
+
+    searchInput.addEventListener('input', renderProducts);
+    categoryFilter.addEventListener('change', renderProducts);
+    sortSelect.addEventListener('change', renderProducts);
+
+    updateCatalogueViews();
+    refreshCatalogueAvailability=refreshLiveCatalogue;
+
+  } catch(error) {
+    console.error('Catalogue loading error:', error);
+    count.textContent = 'Catalogue unavailable';
+
+    const message = document.createElement('p');
+    message.textContent =
+      'Catalogue temporarily unavailable. Please contact Goodys Textile.';
+    box.replaceChildren(message);
+    wholesaleCatalogueStatus.textContent='Wholesale catalogue unavailable.';
+    wholesaleProducts.replaceChildren();
+    updateWholesaleSubmitAvailability();
+  }
 }
-document.querySelector('.menu').addEventListener('click',()=>document.querySelector('.nav nav').classList.toggle('open'));
-document.querySelectorAll('.nav nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav nav').classList.remove('open')));
+
+const menuButton=document.querySelector('.menu');
+const primaryNavigation=document.getElementById('primaryNavigation');
+
+function setMenuOpen(isOpen){
+  primaryNavigation.classList.toggle('open',isOpen);
+  menuButton.setAttribute('aria-expanded',String(isOpen));
+  menuButton.setAttribute(
+    'aria-label',
+    isOpen ? 'Close navigation menu' : 'Open navigation menu'
+  );
+  menuButton.textContent=isOpen ? '×' : '☰';
+}
+
+menuButton.addEventListener('click',()=>{
+  setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+});
+
+primaryNavigation.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    setMenuOpen(false);
+  });
+});
+
+const productModal=document.getElementById('productModal');
+const modalClose=document.querySelector('.product-modal-close');
+const modalImage=document.getElementById('modalImage');
+const modalCategory=document.getElementById('modalCategory');
+const modalTitle=document.getElementById('modalTitle');
+const modalDescription=document.getElementById('modalDescription');
+const modalStatus=document.getElementById('modalStatus');
+const modalDetails=document.getElementById('modalDetails');
+const modalQuantityField=document.getElementById('modalQuantityField');
+const modalQuantityLabel=document.getElementById('modalQuantityLabel');
+const modalQuantityInput=document.getElementById('modalQuantityInput');
+const modalQuantityUnit=document.getElementById('modalQuantityUnit');
+const modalQuantityError=document.getElementById('modalQuantityError');
+const modalAddToCart=document.getElementById('modalAddToCart');
+const modalCartFeedback=document.getElementById('modalCartFeedback');
+const modalWhatsApp=document.getElementById('modalWhatsApp');
+const cartDrawer=document.getElementById('cartDrawer');
+const cartTrigger=document.getElementById('cartTrigger');
+const cartClose=document.getElementById('cartClose');
+const cartCount=document.getElementById('cartCount');
+const cartItems=document.getElementById('cartItems');
+const cartNotice=document.getElementById('cartNotice');
+const cartSubtotal=document.getElementById('cartSubtotal');
+const cartTotal=document.getElementById('cartTotal');
+const cartCheckout=document.getElementById('cartCheckout');
+const cartCustomerForm=document.getElementById('cartCustomerForm');
+const customerFullName=document.getElementById('customerFullName');
+const customerPhone=document.getElementById('customerPhone');
+const fulfillmentMethod=document.getElementById('fulfillmentMethod');
+const customerAddress=document.getElementById('customerAddress');
+const addressRequiredMark=document.getElementById('addressRequiredMark');
+const customerOrderNote=document.getElementById('customerOrderNote');
+const customerFormNotice=document.getElementById('customerFormNotice');
+const wholesaleSearch=document.getElementById('wholesaleSearch');
+const wholesaleCategoryFilter=document.getElementById('wholesaleCategoryFilter');
+const wholesaleCatalogueStatus=document.getElementById('wholesaleCatalogueStatus');
+const wholesaleProducts=document.getElementById('wholesaleProducts');
+const wholesaleSelectionCount=document.getElementById('wholesaleSelectionCount');
+const wholesaleSelectedItems=document.getElementById('wholesaleSelectedItems');
+const wholesaleCustomerForm=document.getElementById('wholesaleCustomerForm');
+const wholesaleFullName=document.getElementById('wholesaleFullName');
+const wholesalePhone=document.getElementById('wholesalePhone');
+const wholesaleBusiness=document.getElementById('wholesaleBusiness');
+const wholesaleLocation=document.getElementById('wholesaleLocation');
+const wholesaleRequirements=document.getElementById('wholesaleRequirements');
+const wholesaleFormStatus=document.getElementById('wholesaleFormStatus');
+const wholesaleSubmit=document.getElementById('wholesaleSubmit');
+let activeProduct=null;
+const cartQuantityDrafts=new Map();
+
+function isUnavailable(product){
+  return product.stock_status!=='in_stock';
+}
+
+function availabilityBlockMessage(product,action){
+  return product.stock_status==='out_of_stock'
+    ? `${product.title} is OUT OF STOCK and cannot be ${action}.`
+    : `Availability for ${product.title} must be confirmed before it can be ${action}.`;
+}
+
+function isQuantityConfigured(product){
+  return Boolean(
+    product.selling_unit &&
+    typeof product.quantity_step==='number' && product.quantity_step>0 &&
+    typeof product.minimum_quantity==='number' && product.minimum_quantity>=0
+  );
+}
+
+function startingQuantity(product){
+  return product.minimum_quantity>0
+    ? product.minimum_quantity
+    : product.quantity_step;
+}
+
+function quantityDecimalPlaces(value){
+  const [coefficient,exponent='0']=String(value).toLowerCase().split('e');
+  return Math.min(
+    20,
+    Math.max(0,(coefficient.split('.')[1]||'').length-Number(exponent))
+  );
+}
+
+function normalizeCartQuantity(product,quantity){
+  const precision=Math.max(
+    quantityDecimalPlaces(product.minimum_quantity),
+    quantityDecimalPlaces(product.quantity_step)
+  );
+  return Number(quantity.toFixed(precision));
+}
+
+function validCartQuantity(product,quantity){
+  if(!isQuantityConfigured(product) || !Number.isFinite(quantity) || quantity<=0){
+    return false;
+  }
+  const steps=(quantity-product.minimum_quantity)/product.quantity_step;
+  if(!Number.isFinite(steps)) return false;
+  const expected=product.minimum_quantity+Math.round(steps)*product.quantity_step;
+  const tolerance=Number.EPSILON*Math.max(1,Math.abs(quantity),Math.abs(expected))*4;
+  return quantity>=startingQuantity(product) &&
+    Math.abs(quantity-expected)<=tolerance;
+}
+
+function formatAmount(amount){
+  return formatCurrency(amount);
+}
+
+function formatQuantity(quantity){
+  return new Intl.NumberFormat(undefined,{
+    minimumFractionDigits:Number.isInteger(quantity)?1:0,
+    maximumFractionDigits:20
+  }).format(quantity);
+}
+
+function quantityValidationMessage(product){
+  const minimum=startingQuantity(product);
+  const step=product.quantity_step;
+  const examples=[
+    minimum,
+    normalizeCartQuantity(product,minimum+step),
+    normalizeCartQuantity(product,minimum+(2*step)),
+    normalizeCartQuantity(product,minimum+(3*step))
+  ]
+    .map(formatQuantity)
+    .join(', ');
+  return `Invalid quantity. Minimum order is ${formatQuantity(minimum)} ${product.selling_unit}, in increments of ${formatQuantity(step)} ${product.selling_unit}. Valid examples: ${examples}.`;
+}
+
+function setQuantityValidationState(input,error,message){
+  const invalid=Boolean(message);
+  input.setAttribute('aria-invalid',String(invalid));
+  error.textContent=message;
+  error.hidden=!invalid;
+}
+
+function renderWholesaleCatalogue(){
+  const searchTerm=wholesaleSearch.value.trim().toLowerCase();
+  const selectedCategory=wholesaleCategoryFilter.value;
+  const filtered=catalogueProducts.filter(product=>{
+    const matchesSearch=[
+      product.title,
+      product.category,
+      product.description
+    ].some(value=>String(value||'').toLowerCase().includes(searchTerm));
+    const matchesCategory=selectedCategory==='all' ||
+      product.category===selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  wholesaleProducts.replaceChildren();
+  wholesaleCatalogueStatus.textContent=
+    `${filtered.length} fabric${filtered.length===1?'':'s'} found`;
+  if(filtered.length===0){
+    const empty=document.createElement('p');
+    empty.className='wholesale-empty';
+    empty.textContent='No fabrics match your search or category.';
+    wholesaleProducts.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(product=>{
+    const card=document.createElement('article');
+    card.className='wholesale-product';
+    const image=document.createElement('img');
+    image.src=product.image;
+    image.alt=product.title;
+    image.width=96;
+    image.height=96;
+    image.loading='lazy';
+    image.addEventListener('error',()=>applyImageFallback(image));
+
+    const details=document.createElement('div');
+    details.className='wholesale-product-details';
+    const category=document.createElement('p');
+    category.className='wholesale-product-category';
+    category.textContent=product.category;
+    const title=document.createElement('h3');
+    title.textContent=product.title;
+    const unit=document.createElement('p');
+    unit.className='wholesale-product-unit';
+    unit.textContent=`Selling unit: ${product.selling_unit||'To be confirmed'}`;
+    const status=document.createElement('p');
+    status.className='wholesale-product-status';
+    status.textContent=statusLabels[product.stock_status] || statusLabels.unconfirmed;
+    const add=document.createElement('button');
+    add.type='button';
+    add.className='wholesale-add';
+    add.dataset.wholesaleAction='add';
+    add.dataset.productId=product.id||'';
+    if(wholesaleSelection.has(product.id)){
+      add.textContent='Added to quote';
+    }else if(isUnavailable(product)){
+      add.textContent=product.stock_status==='out_of_stock'
+        ? 'OUT OF STOCK'
+        : 'Confirm availability';
+    }else{
+      add.textContent='Select for quote';
+    }
+    add.disabled=!product.id || isUnavailable(product) ||
+      wholesaleSelection.has(product.id);
+    details.append(category,title,unit,status,add);
+    card.append(image,details);
+    wholesaleProducts.appendChild(card);
+  });
+}
+
+function renderWholesaleSelection(){
+  wholesaleSelectedItems.replaceChildren();
+  wholesaleSelectionCount.textContent=
+    `${wholesaleSelection.size} fabric${wholesaleSelection.size===1?'':'s'} selected`;
+
+  if(wholesaleSelection.size===0){
+    const empty=document.createElement('p');
+    empty.className='wholesale-empty';
+    empty.textContent='Select fabrics from the catalogue to start a quote request.';
+    wholesaleSelectedItems.appendChild(empty);
+    updateWholesaleSubmitAvailability();
+    return;
+  }
+
+  wholesaleSelection.forEach((selection,id)=>{
+    const product=catalogueProducts.find(item=>item.id===id);
+    if(!product) return;
+    const configured=isQuantityConfigured(product);
+    const invalid=configured && (
+      selection.draft!==null ||
+      !validCartQuantity(product,selection.quantity)
+    );
+    const item=document.createElement('article');
+    item.className='wholesale-selected-item';
+    const image=document.createElement('img');
+    image.src=product.image;
+    image.alt=product.title;
+    image.width=72;
+    image.height=72;
+    image.loading='lazy';
+    image.addEventListener('error',()=>applyImageFallback(image));
+
+    const details=document.createElement('div');
+    details.className='wholesale-selected-details';
+    const heading=document.createElement('div');
+    heading.className='wholesale-selected-heading';
+    const title=document.createElement('h5');
+    title.textContent=product.title;
+    const remove=document.createElement('button');
+    remove.type='button';
+    remove.className='wholesale-remove';
+    remove.dataset.wholesaleAction='remove';
+    remove.dataset.productId=id;
+    remove.setAttribute('aria-label',`Remove ${product.title} from quote`);
+    remove.textContent='Remove';
+    heading.append(title,remove);
+
+    const category=document.createElement('p');
+    category.className='wholesale-selected-category';
+    category.textContent=product.category;
+    const unit=document.createElement('p');
+    unit.className='wholesale-selected-unit';
+    unit.textContent=`Selling unit: ${product.selling_unit||'To be confirmed'}`;
+    details.append(heading,category,unit);
+
+    if(configured){
+      const field=document.createElement('div');
+      field.className='wholesale-quantity-field';
+      const inputId=`wholesaleQuantity${wholesaleSelectedItems.children.length}`;
+      const label=document.createElement('label');
+      label.htmlFor=inputId;
+      label.textContent=`Quantity (${product.selling_unit})`;
+      const input=document.createElement('input');
+      input.id=inputId;
+      input.className='wholesale-quantity-input';
+      input.type='number';
+      input.inputMode='decimal';
+      input.min=String(product.minimum_quantity);
+      input.step=String(product.quantity_step);
+      input.value=selection.draft!==null
+        ? selection.draft
+        : String(selection.quantity);
+      input.dataset.productId=id;
+      input.setAttribute('aria-label',`${product.title} wholesale quantity in ${product.selling_unit}`);
+      const error=document.createElement('p');
+      error.id=`${inputId}Error`;
+      error.className='quantity-validation-error wholesale-quantity-error';
+      error.setAttribute('role','alert');
+      error.textContent=invalid?quantityValidationMessage(product):'';
+      error.hidden=!invalid;
+      input.setAttribute('aria-describedby',error.id);
+      input.setAttribute('aria-invalid',String(invalid));
+      field.append(label,input,error);
+      details.appendChild(field);
+    }else{
+      const configuration=document.createElement('p');
+      configuration.className='wholesale-configuration-notice';
+      configuration.textContent='Quantity configuration required: selling unit, minimum order, and increment must be configured before this fabric can be quoted.';
+      details.appendChild(configuration);
+    }
+
+    item.append(image,details);
+    wholesaleSelectedItems.appendChild(item);
+  });
+  updateWholesaleSubmitAvailability();
+}
+
+function wholesaleSelectionError(){
+  if(wholesaleSelection.size===0){
+    return 'Select at least one fabric for the wholesale quote request.';
+  }
+  for(const [id,selection] of wholesaleSelection){
+    const product=catalogueProducts.find(item=>item.id===id);
+    if(!product) return `${id} is no longer available in the catalogue.`;
+    if(isUnavailable(product)) return availabilityBlockMessage(product,'quoted');
+    if(!isQuantityConfigured(product)){
+      return `${product.title} requires selling-unit, minimum-quantity, and increment configuration before it can be quoted.`;
+    }
+    if(selection.draft!==null || !validCartQuantity(product,selection.quantity)){
+      return quantityValidationMessage(product);
+    }
+  }
+  return '';
+}
+
+function updateWholesaleSubmitAvailability(){
+  const nameMissing=!wholesaleFullName.value.trim();
+  const phoneMissing=!wholesalePhone.value.trim();
+  const locationMissing=!wholesaleLocation.value.trim();
+  wholesaleFullName.setCustomValidity(nameMissing?'Enter your full name.':'');
+  wholesalePhone.setCustomValidity(phoneMissing?'Enter your phone number.':'');
+  wholesaleLocation.setCustomValidity(locationMissing?'Enter your location.':'');
+  wholesaleFullName.setAttribute('aria-invalid',String(nameMissing));
+  wholesalePhone.setAttribute('aria-invalid',String(phoneMissing));
+  wholesaleLocation.setAttribute('aria-invalid',String(locationMissing));
+
+  const customerError=nameMissing || phoneMissing || locationMissing
+    ? 'Enter your full name, phone number, and location to continue.'
+    : '';
+  const error=wholesaleSelectionError() ||
+    customerError ||
+    (!catalogueWhatsappNumber?'WhatsApp contact settings are unavailable.':'');
+  wholesaleSubmit.disabled=Boolean(error);
+  wholesaleFormStatus.textContent=error||'Ready to submit a wholesale quote request.';
+  wholesaleFormStatus.classList.toggle('is-ready',!error);
+  return error;
+}
+
+function selectWholesaleProduct(product,button){
+  if(!product.id || isUnavailable(product) || wholesaleSelection.has(product.id)){
+    return;
+  }
+  const configured=isQuantityConfigured(product);
+  wholesaleSelection.set(product.id,{
+    quantity:configured?startingQuantity(product):null,
+    draft:null
+  });
+  button.disabled=true;
+  button.textContent='Added to quote';
+  renderWholesaleSelection();
+}
+
+function handleWholesaleQuantityInput(input){
+  const product=catalogueProducts.find(item=>item.id===input.dataset.productId);
+  const selection=wholesaleSelection.get(input.dataset.productId);
+  if(!product || !selection || !isQuantityConfigured(product)) return;
+
+  const quantity=Number(input.value);
+  const error=document.getElementById(`${input.id}Error`);
+  if(validCartQuantity(product,quantity)){
+    selection.quantity=normalizeCartQuantity(product,quantity);
+    selection.draft=null;
+    setQuantityValidationState(input,error,'');
+  }else{
+    selection.draft=input.value;
+    setQuantityValidationState(input,error,quantityValidationMessage(product));
+  }
+  updateWholesaleSubmitAvailability();
+}
+
+function removeWholesaleProduct(productId){
+  wholesaleSelection.delete(productId);
+  renderWholesaleCatalogue();
+  renderWholesaleSelection();
+  const addButton=Array.from(wholesaleProducts.querySelectorAll('.wholesale-add'))
+    .find(button=>button.dataset.productId===productId);
+  if(addButton) addButton.focus();
+}
+
+function submitWholesaleQuote(event){
+  event.preventDefault();
+  const error=updateWholesaleSubmitAvailability();
+  if(error){
+    wholesaleCustomerForm.reportValidity();
+    return;
+  }
+
+  const lines=[
+    'WHOLESALE QUOTATION REQUEST',
+    'Hello Goodys Textile,',
+    '',
+    'Customer information:',
+    `Full name: ${wholesaleFullName.value.trim()}`,
+    `Phone number: ${wholesalePhone.value.trim()}`
+  ];
+  if(wholesaleBusiness.value.trim()){
+    lines.push(`Business/company: ${wholesaleBusiness.value.trim()}`);
+  }
+  lines.push(`Location: ${wholesaleLocation.value.trim()}`);
+  if(wholesaleRequirements.value.trim()){
+    lines.push(`Additional requirements: ${wholesaleRequirements.value.trim()}`);
+  }
+  lines.push('','Requested fabrics:');
+  let index=0;
+  wholesaleSelection.forEach((selection,id)=>{
+    const product=catalogueProducts.find(item=>item.id===id);
+    index+=1;
+    lines.push(`${index}. ${product.title}`);
+    lines.push(`   Category: ${product.category}`);
+    lines.push(`   Selling unit: ${product.selling_unit}`);
+    lines.push(`   Quantity: ${formatQuantity(selection.quantity)} ${product.selling_unit}`);
+  });
+  lines.push(
+    '',
+    currentSiteSettings && currentSiteSettings.wholesale_whatsapp_message
+      ? currentSiteSettings.wholesale_whatsapp_message
+      : 'Please confirm wholesale pricing and availability. This is a quotation request, not a confirmed order.'
+  );
+
+  const link=document.createElement('a');
+  link.href=wa(catalogueWhatsappNumber,lines.join('\n'));
+  link.target='_blank';
+  link.rel='noopener';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  wholesaleFormStatus.textContent='WhatsApp opened with your request. Send the message there to submit it.';
+  wholesaleFormStatus.classList.add('is-ready');
+}
+
+function updateCartTotals(){
+  const productById=new Map(catalogueProducts.filter(product=>product.id).map(product=>[product.id,product]));
+  const lineTotals=new Map(
+    Array.from(
+      cartItems.querySelectorAll('.cart-line-total'),
+      line=>[line.dataset.productId,line]
+    )
+  );
+  let allLineTotalsKnown=true;
+  let orderTotal=0;
+
+  cartEntries.forEach(entry=>{
+    const product=productById.get(entry.id);
+    if(!product) return;
+    const line=lineTotals.get(entry.id);
+    const quantityValid=!cartQuantityDrafts.has(entry.id) &&
+      isQuantityConfigured(product) &&
+      validCartQuantity(product,entry.quantity);
+    if(product.pricing_synced && typeof product.price==='number' && quantityValid){
+      const lineTotal=product.price*entry.quantity;
+      if(line) line.textContent=`Line total: ${formatAmount(lineTotal)}`;
+      orderTotal+=lineTotal;
+    }else{
+      if(line) line.textContent='Line total: To be confirmed';
+      allLineTotalsKnown=false;
+    }
+  });
+
+  const totalText=allLineTotalsKnown?formatAmount(orderTotal):'To be confirmed';
+  cartSubtotal.textContent=totalText;
+  cartTotal.textContent=totalText;
+  updateCheckoutAvailability();
+}
+
+function displayPrice(price){
+  return formatCurrency(price);
+}
+
+function setCartNotice(message){
+  cartNotice.textContent=message;
+}
+
+function validateCustomerDetails(){
+  const missing=[];
+  const nameMissing=!customerFullName.value.trim();
+  const phoneMissing=!customerPhone.value.trim();
+  const methodMissing=!['delivery','pickup'].includes(fulfillmentMethod.value);
+  const addressRequired=fulfillmentMethod.value==='delivery';
+  const addressMissing=addressRequired && !customerAddress.value.trim();
+
+  customerFullName.setCustomValidity(nameMissing?'Enter your full name.':'');
+  customerFullName.setAttribute('aria-invalid',String(nameMissing));
+  customerPhone.setCustomValidity(phoneMissing?'Enter your phone number.':'');
+  customerPhone.setAttribute('aria-invalid',String(phoneMissing));
+  fulfillmentMethod.setCustomValidity(methodMissing?'Choose delivery or shop pickup.':'');
+  fulfillmentMethod.setAttribute('aria-invalid',String(methodMissing));
+  customerAddress.required=addressRequired;
+  addressRequiredMark.hidden=!addressRequired;
+  customerAddress.setCustomValidity(addressMissing?'Enter a delivery address.':'');
+  customerAddress.setAttribute('aria-invalid',String(addressMissing));
+
+  if(nameMissing) missing.push('full name');
+  if(phoneMissing) missing.push('phone number');
+  if(methodMissing) missing.push('delivery or shop pickup');
+  if(addressMissing) missing.push('delivery address');
+
+  customerFormNotice.textContent=missing.length
+    ? `Complete the required customer information: ${missing.join(', ')}.`
+    : '';
+  return missing.length>0;
+}
+
+function updateCheckoutAvailability(){
+  const cartError=validateCartForCheckout();
+  const customerError=validateCustomerDetails();
+  cartCheckout.disabled=Boolean(cartError || customerError);
+  if(cartError) setCartNotice(cartError);
+}
+
+function updateModalLock(){
+  document.body.classList.toggle(
+    'modal-open',
+    productModal.open || cartDrawer.open
+  );
+}
+
+function persistCart(){
+  if(!cartStorageAvailable) return;
+  try{
+    localStorage.setItem(cartStorageKey,JSON.stringify(cartEntries));
+  }catch(error){
+    cartStorageAvailable=false;
+    console.warn('Cart persistence unavailable:',error);
+    setCartNotice('Your cart is available for this visit, but could not be saved in this browser.');
+  }
+}
+
+function restoreCart(products,legacyIdMap=new Map()){
+  try{
+    const saved=localStorage.getItem(cartStorageKey);
+    if(!saved) return;
+    const parsed=JSON.parse(saved);
+    if(!Array.isArray(parsed)) throw new Error('Stored cart is not an array.');
+
+    const productById=new Map(products.filter(product=>product.id).map(product=>[product.id,product]));
+    const restored=new Map();
+    let migratedLegacyId=false;
+    parsed.forEach(entry=>{
+      if(!entry || typeof entry.id!=='string') return;
+      const productId=productById.has(entry.id)
+        ? entry.id
+        : legacyIdMap.get(entry.id);
+      const product=productById.get(productId);
+      if(!product) return;
+      if(restored.has(product.id)) return;
+      const quantity=isQuantityConfigured(product)
+        ? entry.quantity===null || entry.quantity===undefined
+          ? startingQuantity(product)
+          : validCartQuantity(product,entry.quantity)
+            ? entry.quantity
+            : null
+        : null;
+      restored.set(product.id,{id:product.id,quantity});
+      if(product.id!==entry.id) migratedLegacyId=true;
+    });
+    cartEntries=[...restored.values()];
+    if(migratedLegacyId) persistCart();
+  }catch(error){
+    console.warn('Saved cart could not be restored:',error);
+    cartEntries=[];
+    setCartNotice('A saved cart could not be read and was not restored.');
+  }
+}
+
+function addProductToCart(product,selectedQuantity){
+  const quantityProvided=typeof selectedQuantity==='number';
+  if(!product.id){
+    setCartNotice(`${product.title} cannot be added because it has no product identifier.`);
+    return false;
+  }
+  if(isUnavailable(product)){
+    setCartNotice(availabilityBlockMessage(product,'added to the cart'));
+    return false;
+  }
+  if(quantityProvided && (
+    !isQuantityConfigured(product) ||
+    !validCartQuantity(product,selectedQuantity)
+  )){
+    setCartNotice(isQuantityConfigured(product)
+      ? quantityValidationMessage(product)
+      : `${product.title} quantity requires configuration before it can be changed.`);
+    return false;
+  }
+  if(cartQuantityDrafts.has(product.id) && !quantityProvided){
+    setCartNotice(quantityValidationMessage(product));
+    return false;
+  }
+
+  const existing=cartEntries.find(entry=>entry.id===product.id);
+  if(existing){
+    if(quantityProvided){
+      existing.quantity=normalizeCartQuantity(product,selectedQuantity);
+    }else if(isQuantityConfigured(product)){
+      existing.quantity=validCartQuantity(product,existing.quantity)
+        ? normalizeCartQuantity(product,existing.quantity+product.quantity_step)
+        : startingQuantity(product);
+    }
+    setCartNotice(isQuantityConfigured(product)
+      ? `${product.title} quantity updated in your cart.`
+      : `${product.title} is already in your cart; quantity requires configuration.`);
+  }else{
+    cartEntries.push({
+      id:product.id,
+      quantity:quantityProvided
+        ? normalizeCartQuantity(product,selectedQuantity)
+        : isQuantityConfigured(product)
+          ? startingQuantity(product)
+          : null
+    });
+    setCartNotice(isQuantityConfigured(product)
+      ? `${product.title} added to your cart.`
+      : `${product.title} added. Unit and quantity configuration are required.`);
+  }
+  cartQuantityDrafts.delete(product.id);
+  persistCart();
+  renderCart();
+  return true;
+}
+
+function validateCartForCheckout(){
+  if(cartEntries.length===0) return 'Add at least one fabric before continuing.';
+  const productById=new Map(catalogueProducts.filter(product=>product.id).map(product=>[product.id,product]));
+  for(const entry of cartEntries){
+    const product=productById.get(entry.id);
+    if(!product) return `${entry.id} is no longer available in the catalogue.`;
+    if(isUnavailable(product)){
+      return availabilityBlockMessage(product,'checked out');
+    }
+    if(!product.pricing_synced){
+      return `The price for ${product.title} is unavailable. Please contact Goodys Textile before checkout.`;
+    }
+    if(product.price===null){
+      return `The price for ${product.title} is to be confirmed. Checkout is unavailable until it is confirmed.`;
+    }
+    if(isQuantityConfigured(product)){
+      if(cartQuantityDrafts.has(entry.id)){
+        return quantityValidationMessage(product);
+      }
+      if(!validCartQuantity(product,entry.quantity)){
+        return quantityValidationMessage(product);
+      }
+    }
+  }
+  if(!catalogueWhatsappNumber) return 'WhatsApp checkout is unavailable until site contact settings load.';
+  return '';
+}
+
+function renderCart(){
+  const productById=new Map(catalogueProducts.filter(product=>product.id).map(product=>[product.id,product]));
+  cartEntries=cartEntries.filter(entry=>productById.has(entry.id));
+  const activeIds=new Set(cartEntries.map(entry=>entry.id));
+  cartQuantityDrafts.forEach((value,id)=>{
+    if(!activeIds.has(id)) cartQuantityDrafts.delete(id);
+  });
+  cartCount.textContent=String(cartEntries.length);
+  cartCount.setAttribute('aria-label',`${cartEntries.length} cart item${cartEntries.length===1?'':'s'}`);
+  cartTrigger.setAttribute('aria-label',`Open shopping cart with ${cartEntries.length} item${cartEntries.length===1?'':'s'}`);
+  cartItems.replaceChildren();
+
+  if(cartEntries.length===0){
+    cartCustomerForm.hidden=true;
+    const empty=document.createElement('p');
+    empty.className='cart-empty';
+    empty.textContent='Your cart is empty. Add fabrics from the catalogue to get started.';
+    cartItems.appendChild(empty);
+    cartSubtotal.textContent='—';
+    cartTotal.textContent='—';
+    cartCheckout.disabled=true;
+    validateCustomerDetails();
+    return;
+  }
+
+  cartCustomerForm.hidden=false;
+  cartEntries.forEach((entry,index)=>{
+    const product=productById.get(entry.id);
+    const configured=isQuantityConfigured(product);
+    const hasDraft=cartQuantityDrafts.has(entry.id);
+    const quantityInvalid=configured && (
+      hasDraft || !validCartQuantity(product,entry.quantity)
+    );
+    const item=document.createElement('article');
+    item.className='cart-item';
+
+    const image=document.createElement('img');
+    image.src=product.image;
+    image.alt=product.title;
+    image.width=96;
+    image.height=96;
+    image.loading='lazy';
+    image.addEventListener('error',()=>applyImageFallback(image));
+
+    const body=document.createElement('div');
+    body.className='cart-item-body';
+    const heading=document.createElement('div');
+    heading.className='cart-item-heading';
+    const title=document.createElement('h3');
+    title.textContent=product.title;
+    const remove=document.createElement('button');
+    remove.type='button';
+    remove.className='cart-remove';
+    remove.dataset.cartAction='remove';
+    remove.dataset.productId=entry.id;
+    remove.setAttribute('aria-label',`Remove ${product.title} from cart`);
+    remove.textContent='Remove';
+    heading.append(title,remove);
+
+    const unit=document.createElement('p');
+    unit.className='cart-unit';
+    unit.textContent=configured
+      ? `Selling unit: ${product.selling_unit}`
+      : 'Configuration required: selling unit, quantity step and minimum quantity.';
+
+    const price=document.createElement('p');
+    price.className='cart-price';
+    if(!product.pricing_synced){
+      price.textContent='Price unavailable; please contact Goodys Textile.';
+    }else if(product.price===null){
+      price.textContent='Price to be confirmed';
+    }else if(configured){
+      price.textContent=`Unit price: ${displayPrice(product.price)} / ${product.selling_unit}`;
+    }else{
+      price.textContent=`Price: ${displayPrice(product.price)} (selling unit to be confirmed)`;
+    }
+
+    body.append(heading,unit,price);
+
+    if(configured){
+      const quantityRow=document.createElement('div');
+      quantityRow.className='cart-quantity-row';
+      const quantityLabel=document.createElement('label');
+      const inputId=`cartQuantity${index}`;
+      quantityLabel.htmlFor=inputId;
+      quantityLabel.textContent=`Quantity (${product.selling_unit})`;
+      const quantityControl=document.createElement('div');
+      quantityControl.className='cart-quantity-control';
+      const stepper=document.createElement('div');
+      stepper.className='cart-stepper';
+
+      const decrement=document.createElement('button');
+      decrement.type='button';
+      decrement.dataset.cartAction='decrease';
+      decrement.dataset.productId=entry.id;
+      decrement.textContent='−';
+      decrement.setAttribute('aria-label',`Decrease ${product.title} quantity`);
+      decrement.disabled=isUnavailable(product) || quantityInvalid ||
+        !validCartQuantity(product,entry.quantity) ||
+        entry.quantity<=startingQuantity(product);
+
+      const input=document.createElement('input');
+      input.id=inputId;
+      input.className='cart-quantity-input';
+      input.type='number';
+      input.inputMode='decimal';
+      input.min=String(product.minimum_quantity);
+      input.step=String(product.quantity_step);
+      input.value=hasDraft
+        ? cartQuantityDrafts.get(entry.id)
+        : typeof entry.quantity==='number'?String(entry.quantity):'';
+      input.disabled=isUnavailable(product);
+      input.dataset.productId=entry.id;
+      input.setAttribute('aria-label',`${product.title} quantity in ${product.selling_unit}`);
+      const error=document.createElement('p');
+      error.id=`${inputId}Error`;
+      error.className='quantity-validation-error cart-quantity-error';
+      error.setAttribute('role','alert');
+      error.textContent=quantityInvalid?quantityValidationMessage(product):'';
+      error.hidden=!quantityInvalid;
+      input.setAttribute('aria-describedby',error.id);
+      input.setAttribute('aria-invalid',String(quantityInvalid));
+
+      const unit=document.createElement('span');
+      unit.className='cart-quantity-unit';
+      unit.textContent=product.selling_unit;
+
+      const increment=document.createElement('button');
+      increment.type='button';
+      increment.dataset.cartAction='increase';
+      increment.dataset.productId=entry.id;
+      increment.textContent='+';
+      increment.setAttribute('aria-label',`Increase ${product.title} quantity`);
+      increment.disabled=isUnavailable(product) || quantityInvalid;
+
+      stepper.append(decrement,input,unit,increment);
+      quantityControl.append(stepper,error);
+      quantityRow.append(quantityLabel,quantityControl);
+      body.appendChild(quantityRow);
+    }else{
+      const quantity=document.createElement('p');
+      quantity.className='cart-quantity-unconfigured';
+      quantity.textContent='Quantity: To be configured';
+      body.appendChild(quantity);
+    }
+
+    const line=document.createElement('p');
+    line.className='cart-line-total';
+    line.dataset.productId=entry.id;
+    line.textContent='Line total: To be confirmed';
+    body.appendChild(line);
+
+    const availability=document.createElement('p');
+    availability.className=isUnavailable(product)?'cart-availability is-unavailable':'cart-availability';
+    availability.textContent=statusLabels[product.stock_status] || statusLabels.unconfirmed;
+    body.appendChild(availability);
+    item.append(image,body);
+    cartItems.appendChild(item);
+  });
+
+  updateCartTotals();
+}
+
+function openCartDrawer(){
+  cartTriggerElement=document.activeElement;
+  renderCart();
+  if(typeof cartDrawer.showModal==='function'){
+    cartDrawer.showModal();
+  }else{
+    cartDrawer.setAttribute('open','');
+  }
+  document.body.classList.add('modal-open');
+  cartClose.focus();
+}
+
+function closeCartDrawer(){
+  if(cartDrawer.open){
+    if(typeof cartDrawer.close==='function'){
+      cartDrawer.close();
+    }else{
+      cartDrawer.removeAttribute('open');
+    }
+  }
+  updateModalLock();
+  if(cartTriggerElement && typeof cartTriggerElement.focus==='function'){
+    cartTriggerElement.focus();
+  }
+  cartTriggerElement=null;
+}
+
+function updateCartQuantity(productId,quantity){
+  const product=catalogueProducts.find(item=>item.id===productId);
+  const entry=cartEntries.find(item=>item.id===productId);
+  if(!product || !entry){
+    return;
+  }
+  if(isUnavailable(product)){
+    setCartNotice(availabilityBlockMessage(product,'changed in the cart'));
+    renderCart();
+    return;
+  }
+  if(!isQuantityConfigured(product) || !validCartQuantity(product,quantity)){
+    const message=isQuantityConfigured(product)
+      ? quantityValidationMessage(product)
+      : `${product.title} quantity requires configuration before it can be changed.`;
+    if(isQuantityConfigured(product)){
+      cartQuantityDrafts.set(productId,String(quantity));
+    }
+    setCartNotice(message);
+    renderCart();
+    return;
+  }
+  cartQuantityDrafts.delete(productId);
+  entry.quantity=normalizeCartQuantity(product,quantity);
+  setCartNotice(`${product.title} quantity updated.`);
+  persistCart();
+  renderCart();
+}
+
+function handleCartQuantityInput(input){
+  const product=catalogueProducts.find(item=>item.id===input.dataset.productId);
+  const entry=cartEntries.find(item=>item.id===input.dataset.productId);
+  if(!product || !entry || !isQuantityConfigured(product)) return;
+  if(isUnavailable(product)){
+    setCartNotice(availabilityBlockMessage(product,'changed in the cart'));
+    renderCart();
+    return;
+  }
+
+  const error=document.getElementById(`${input.id}Error`);
+  const quantity=Number(input.value);
+  const quantityValid=validCartQuantity(product,quantity);
+  if(quantityValid){
+    const wasInvalid=cartQuantityDrafts.has(product.id);
+    cartQuantityDrafts.delete(product.id);
+    entry.quantity=normalizeCartQuantity(product,quantity);
+    setQuantityValidationState(input,error,'');
+    persistCart();
+    if(wasInvalid) setCartNotice(`${product.title} quantity is valid.`);
+  }else{
+    cartQuantityDrafts.set(product.id,input.value);
+    setQuantityValidationState(input,error,quantityValidationMessage(product));
+  }
+  const quantityRow=input.closest('.cart-quantity-row');
+  if(quantityRow){
+    const decrease=quantityRow.querySelector('[data-cart-action="decrease"]');
+    const increase=quantityRow.querySelector('[data-cart-action="increase"]');
+    decrease.disabled=!quantityValid || entry.quantity<=startingQuantity(product);
+    increase.disabled=!quantityValid;
+  }
+  updateCartTotals();
+}
+
+async function checkoutCart(){
+  cartCheckout.disabled=true;
+  await refreshCatalogueAvailability();
+  const error=validateCartForCheckout();
+  const customerError=validateCustomerDetails();
+  if(error || customerError){
+    if(error) setCartNotice(error);
+    cartCustomerForm.reportValidity();
+    updateCheckoutAvailability();
+    return;
+  }
+  const productById=new Map(catalogueProducts.filter(product=>product.id).map(product=>[product.id,product]));
+  const lines=[
+    'Hello Goodys Textile,',
+    'I would like to enquire about the following cart selection:',
+    '',
+    'Customer information:',
+    `Full name: ${customerFullName.value.trim()}`,
+    `Phone number: ${customerPhone.value.trim()}`,
+    `Fulfilment method: ${fulfillmentMethod.value==='delivery'?'Delivery':'Shop pickup'}`,
+    `Location/address: ${customerAddress.value.trim() || 'Not provided (shop pickup)'}`,
+    `Additional order note: ${customerOrderNote.value.trim() || 'None'}`,
+    '',
+    'Requested products:'
+  ];
+  cartEntries.forEach((entry,index)=>{
+    const product=productById.get(entry.id);
+    const configured=isQuantityConfigured(product);
+    lines.push(`${index+1}. ${product.title}`);
+    lines.push(`   Selling unit: ${configured?product.selling_unit:'To be confirmed (configuration required)'}`);
+    lines.push(`   Quantity: ${configured?`${formatQuantity(entry.quantity)} ${product.selling_unit}`:'To be confirmed (configuration required)'}`);
+    lines.push(`   ${!product.pricing_synced
+      ? 'Price unavailable; please contact Goodys Textile'
+      : product.price===null
+        ? 'Price to be confirmed'
+        : configured
+          ? `Unit price: ${displayPrice(product.price)} / ${product.selling_unit}`
+          : `Price: ${displayPrice(product.price)} (selling unit to be confirmed)`}`);
+    lines.push(`   Line total: ${product.pricing_synced && typeof product.price==='number' && configured?formatAmount(product.price*entry.quantity):'To be confirmed'}`);
+    lines.push(`   Availability: ${statusLabels[product.stock_status] || statusLabels.unconfirmed}`);
+  });
+  const knownTotal=cartTotal.textContent;
+  lines.push('',`Product subtotal: ${knownTotal}`,`Product total: ${knownTotal}`);
+  lines.push(
+    currentSiteSettings && currentSiteSettings.order_whatsapp_message
+      ? currentSiteSettings.order_whatsapp_message
+      : 'Please confirm the final availability and pricing. This is an enquiry, not a confirmed order.'
+  );
+
+  const link=document.createElement('a');
+  link.href=wa(catalogueWhatsappNumber,lines.join('\n'));
+  link.target='_blank';
+  link.rel='noopener';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function closeProductModal(){
+  if(productModal.open){
+    if(typeof productModal.close==='function'){
+      productModal.close();
+    }else{
+      productModal.removeAttribute('open');
+    }
+  }
+  updateModalLock();
+  if(productModalTrigger && typeof productModalTrigger.focus==='function'){
+    productModalTrigger.focus();
+  }
+  productModalTrigger=null;
+}
+
+function openProductModal(product,trigger){
+  activeProduct=product;
+  productModalTrigger=trigger;
+  modalCategory.textContent=product.category;
+  modalTitle.textContent=product.title;
+  modalDescription.textContent=product.description;
+  modalStatus.textContent=statusLabels[product.stock_status] || statusLabels.unconfirmed;
+
+  modalImage.alt=product.title;
+  modalImage.dataset.fallbackApplied='';
+  modalImage.src=product.image;
+  modalCartFeedback.textContent='';
+  const configured=isQuantityConfigured(product);
+  const existingEntry=cartEntries.find(entry=>entry.id===product.id);
+  modalQuantityField.hidden=!configured;
+  modalQuantityLabel.textContent=`Quantity (${product.selling_unit || ''})`;
+  modalQuantityUnit.textContent=product.selling_unit || '';
+  modalQuantityInput.min=configured?String(product.minimum_quantity):'';
+  modalQuantityInput.step=configured?String(product.quantity_step):'';
+  modalQuantityInput.value=configured
+    ? existingEntry && validCartQuantity(product,existingEntry.quantity)
+      ? String(existingEntry.quantity)
+      : String(startingQuantity(product))
+    : '';
+  const modalQuantityValid=!configured ||
+    validCartQuantity(product,Number(modalQuantityInput.value));
+  setQuantityValidationState(
+    modalQuantityInput,
+    modalQuantityError,
+    modalQuantityValid?'':quantityValidationMessage(product)
+  );
+  modalAddToCart.disabled=isUnavailable(product) || !product.id || !modalQuantityValid;
+  modalAddToCart.textContent='Add to cart';
+  if(isUnavailable(product)){
+    modalAddToCart.textContent=product.stock_status==='out_of_stock'
+      ? 'OUT OF STOCK'
+      : 'CONFIRM AVAILABILITY';
+  }else if(!product.id){
+    modalAddToCart.textContent='Unavailable';
+  }
+
+  modalDetails.replaceChildren();
+  const detailRows=[
+    ['SKU',product.sku],
+    ['Selling unit',product.selling_unit],
+    ['Retail price',product.pricing_synced?product.price:null]
+  ];
+  detailRows.forEach(([label,value])=>{
+    if(value===null || value===undefined || value==='') return;
+    const term=document.createElement('dt');
+    term.textContent=label;
+    const description=document.createElement('dd');
+    description.textContent=label==='Retail price'
+      ? formatCurrency(value)
+      : String(value);
+    modalDetails.append(term,description);
+  });
+
+  const enquiryLines=[
+    'Hello Goodys Textile,',
+    `I am interested in ${product.title}.`,
+    `Category: ${product.category}`
+  ];
+  if(product.sku) enquiryLines.push(`SKU: ${product.sku}`);
+  if(product.selling_unit) enquiryLines.push(`Selling unit: ${product.selling_unit}`);
+  if(product.pricing_synced && product.price!==null) enquiryLines.push(`Retail price: ${formatCurrency(product.price)}`);
+  enquiryLines.push(`Availability: ${modalStatus.textContent}`);
+  enquiryLines.push(`Product description: ${product.description}`);
+
+  if(catalogueWhatsappNumber){
+    modalWhatsApp.href=wa(catalogueWhatsappNumber,enquiryLines.join('\n'));
+    modalWhatsApp.removeAttribute('aria-disabled');
+  }else{
+    modalWhatsApp.removeAttribute('href');
+    modalWhatsApp.setAttribute('aria-disabled','true');
+  }
+
+  document.body.classList.add('modal-open');
+  if(typeof productModal.showModal==='function'){
+    productModal.showModal();
+  }else{
+    productModal.setAttribute('open','');
+  }
+  modalClose.focus();
+}
+
+modalImage.addEventListener('error',()=>{
+  if(modalImage.dataset.fallbackApplied==='true') return;
+  modalImage.dataset.fallbackApplied='true';
+  modalImage.src='/assets/store-interior.jpg';
+  modalImage.alt='Goodys Textile fabric selection';
+});
+
+modalClose.addEventListener('click',closeProductModal);
+modalQuantityInput.addEventListener('input',()=>{
+  if(!activeProduct || !isQuantityConfigured(activeProduct)) return;
+  const valid=validCartQuantity(activeProduct,Number(modalQuantityInput.value));
+  setQuantityValidationState(
+    modalQuantityInput,
+    modalQuantityError,
+    valid?'':quantityValidationMessage(activeProduct)
+  );
+  modalAddToCart.disabled=isUnavailable(activeProduct) || !activeProduct.id || !valid;
+});
+modalAddToCart.addEventListener('click',()=>{
+  if(!activeProduct) return;
+  const configured=isQuantityConfigured(activeProduct);
+  const quantity=configured?Number(modalQuantityInput.value):undefined;
+  if(configured && !validCartQuantity(activeProduct,quantity)){
+    setQuantityValidationState(
+      modalQuantityInput,
+      modalQuantityError,
+      quantityValidationMessage(activeProduct)
+    );
+    modalAddToCart.disabled=true;
+    return;
+  }
+  if(!addProductToCart(activeProduct,quantity)) return;
+  modalCartFeedback.textContent=isUnavailable(activeProduct)
+    ? availabilityBlockMessage(activeProduct,'added to the cart')
+    : `${activeProduct.title} added or updated in your cart.`;
+});
+productModal.addEventListener('cancel',event=>{
+  event.preventDefault();
+  closeProductModal();
+});
+productModal.addEventListener('click',event=>{
+  if(event.target===productModal) closeProductModal();
+});
+
+cartTrigger.addEventListener('click',openCartDrawer);
+cartClose.addEventListener('click',closeCartDrawer);
+cartDrawer.addEventListener('cancel',event=>{
+  event.preventDefault();
+  closeCartDrawer();
+});
+cartDrawer.addEventListener('click',event=>{
+  if(event.target===cartDrawer) closeCartDrawer();
+});
+cartItems.addEventListener('click',event=>{
+  const control=event.target.closest('[data-cart-action]');
+  if(!control) return;
+  const product=catalogueProducts.find(item=>item.id===control.dataset.productId);
+  const entry=cartEntries.find(item=>item.id===control.dataset.productId);
+  if(!product || !entry) return;
+
+  if(control.dataset.cartAction==='remove'){
+    cartEntries=cartEntries.filter(item=>item.id!==product.id);
+    cartQuantityDrafts.delete(product.id);
+    setCartNotice(`${product.title} removed from your cart.`);
+    persistCart();
+    renderCart();
+  }else if(control.dataset.cartAction==='increase'){
+    const next=validCartQuantity(product,entry.quantity)
+      ? entry.quantity+product.quantity_step
+      : startingQuantity(product);
+    updateCartQuantity(product.id,next);
+  }else if(control.dataset.cartAction==='decrease'){
+    updateCartQuantity(product.id,entry.quantity-product.quantity_step);
+  }
+});
+cartItems.addEventListener('input',event=>{
+  if(!event.target.matches('.cart-quantity-input')) return;
+  handleCartQuantityInput(event.target);
+});
+cartCustomerForm.addEventListener('input',updateCheckoutAvailability);
+cartCustomerForm.addEventListener('change',updateCheckoutAvailability);
+cartCheckout.addEventListener('click',checkoutCart);
+
+wholesaleSearch.addEventListener('input',renderWholesaleCatalogue);
+wholesaleCategoryFilter.addEventListener('change',renderWholesaleCatalogue);
+wholesaleProducts.addEventListener('click',event=>{
+  const control=event.target.closest('[data-wholesale-action="add"]');
+  if(!control) return;
+  const product=catalogueProducts.find(item=>item.id===control.dataset.productId);
+  if(product) selectWholesaleProduct(product,control);
+});
+wholesaleSelectedItems.addEventListener('click',event=>{
+  const control=event.target.closest('[data-wholesale-action="remove"]');
+  if(!control) return;
+  removeWholesaleProduct(control.dataset.productId);
+});
+wholesaleSelectedItems.addEventListener('input',event=>{
+  if(!event.target.matches('.wholesale-quantity-input')) return;
+  handleWholesaleQuantityInput(event.target);
+});
+wholesaleCustomerForm.addEventListener('input',updateWholesaleSubmitAvailability);
+wholesaleCustomerForm.addEventListener('submit',submitWholesaleQuote);
+
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>900) setMenuOpen(false);
+});
+
 loadSite();loadProducts();
 </script>
 </body></html>

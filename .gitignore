@@ -1,0 +1,2 @@
+# Local dashboard configuration. The publishable/anon key is browser-safe but environment-specific.
+/admin/supabase-config.js

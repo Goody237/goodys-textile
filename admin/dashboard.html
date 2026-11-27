@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Goodys Textile V3 administrator dashboard.">
+  <title>Goodys Textile Admin</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script type="module" src="dashboard.js"></script>
+</head>
+<body>
+  <section class="auth-gate" id="authGate" aria-labelledby="authTitle">
+    <div class="auth-card">
+      <a class="brand auth-brand" href="../index.html" aria-label="Goodys Textile storefront">
+        <span class="brand-mark" aria-hidden="true">GT</span>
+        <span class="brand-copy"><strong>Goodys</strong><small>TEXTILE · ADMIN</small></span>
+      </a>
+      <p class="eyebrow">SECURE ADMINISTRATION</p>
+      <h1 id="authTitle">Goodys Textile Dashboard</h1>
+      <p class="auth-description">Sign in with an authorized Supabase administrator account.</p>
+      <p class="auth-message" id="authMessage" role="status" aria-live="polite">Checking Supabase configuration…</p>
+      <form class="auth-form" id="loginForm" hidden>
+        <label for="loginEmail">Email address</label>
+        <input id="loginEmail" type="email" autocomplete="username" required>
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required>
+        <button class="forgot-password-link" id="forgotPasswordButton" type="button">Forgot password?</button>
+        <button class="button button-primary" id="loginButton" type="submit">Sign in</button>
+      </form>
+      <form class="auth-form" id="recoveryForm" hidden>
+        <label for="recoveryEmail">Administrator email address</label>
+        <input id="recoveryEmail" type="email" autocomplete="username" required>
+        <button class="button button-primary" id="sendRecoveryButton" type="submit">Send recovery email</button>
+        <button class="forgot-password-link recovery-back-button" id="backToLoginButton" type="button">Back to sign in</button>
+      </form>
+      <button class="button button-secondary auth-retry" id="retryAuthButton" type="button" hidden>Retry connection</button>
+      <a class="storefront-link auth-storefront-link" href="../index.html">← View storefront</a>
+    </div>
+  </section>
+
+  <div class="admin-shell" id="dashboardApp" hidden>
+    <aside class="sidebar" aria-label="Administration">
+      <a class="brand" href="../index.html" aria-label="Goodys Textile storefront">
+        <span class="brand-mark" aria-hidden="true">GT</span>
+        <span class="brand-copy"><strong>Goodys</strong><small>TEXTILE · ADMIN</small></span>
+      </a>
+
+      <p class="nav-caption">WORKSPACE</p>
+      <nav class="side-nav" id="adminNavigation" aria-label="Admin sections">
+        <button class="nav-item is-active" type="button" data-view="overview" aria-current="page">
+          <span class="nav-icon" aria-hidden="true">◫</span>Overview
+        </button>
+        <button class="nav-item" type="button" data-view="products">
+          <span class="nav-icon" aria-hidden="true">▧</span>Products
+        </button>
+        <button class="nav-item" type="button" data-view="orders">
+          <span class="nav-icon" aria-hidden="true">▣</span>Orders
+        </button>
+        <button class="nav-item" type="button" data-view="quotations">
+          <span class="nav-icon" aria-hidden="true">▱</span>Wholesale quotations
+        </button>
+        <button class="nav-item" type="button" data-view="settings">
+          <span class="nav-icon" aria-hidden="true">⚙</span>Settings
+        </button>
+      </nav>
+
+      <div class="connection-card">
+        <span class="connection-indicator" id="connectionIndicator" aria-hidden="true"></span>
+        <div>
+          <strong>Database connection</strong>
+          <span id="connectionStatus">Not connected</span>
+        </div>
+      </div>
+      <a class="storefront-link" href="../index.html">← View storefront</a>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">GOODYS TEXTILE · V3</p>
+          <h1 id="pageTitle">Overview</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="admin-identity" id="adminIdentity"></span>
+          <button class="button button-secondary logout-button" id="logoutButton" type="button">Sign out</button>
+          <span class="foundation-badge"><span aria-hidden="true"></span>Supabase admin</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="view" data-admin-view="overview" aria-labelledby="overviewHeading">
+          <div class="welcome-panel">
+            <div>
+              <p class="eyebrow">ADMINISTRATION</p>
+              <h2 id="overviewHeading">A clearer view of your business.</h2>
+              <p>Product management and manual availability use the authenticated Supabase connection. Orders and quotations remain separate implementation milestones.</p>
+            </div>
+            <div class="welcome-mark" aria-hidden="true">GT</div>
+          </div>
+
+          <div class="metrics-grid" aria-label="Dashboard metrics">
+            <article class="metric-card">
+              <span class="metric-label">Catalogue products</span>
+              <strong class="metric-value" id="productMetric">—</strong>
+              <span class="metric-note">Active products visible to this admin</span>
+            </article>
+            <article class="metric-card is-placeholder">
+              <span class="metric-label">Out of stock</span>
+              <strong class="metric-value" id="availabilityMetric">—</strong>
+              <span class="metric-note">Products manually marked OUT OF STOCK</span>
+            </article>
+            <article class="metric-card is-placeholder">
+              <span class="metric-label">Orders</span>
+              <strong class="metric-value">—</strong>
+              <span class="metric-note">Order service not connected</span>
+            </article>
+            <article class="metric-card is-placeholder">
+              <span class="metric-label">Open quotations</span>
+              <strong class="metric-value">—</strong>
+              <span class="metric-note">Quote records not connected</span>
+            </article>
+          </div>
+
+          <section class="panel activity-panel" aria-labelledby="activityHeading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">ACTIVITY</p>
+                <h2 id="activityHeading">Recent activity</h2>
+              </div>
+              <span class="muted-label">Placeholder</span>
+            </div>
+            <div class="empty-state">
+              <span class="empty-icon" aria-hidden="true">◷</span>
+              <p>No activity feed is connected yet.</p>
+              <span>Product changes and manual availability updates will be listed here after backend integration.</span>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" data-admin-view="products" aria-labelledby="productsHeading" hidden>
+          <section class="panel products-panel">
+            <div class="panel-heading products-heading">
+              <div>
+                <p class="eyebrow">CATALOGUE</p>
+                <h2 id="productsHeading">Products</h2>
+                <p class="panel-description">Products loaded from the authenticated Supabase database.</p>
+              </div>
+              <button class="button button-primary" id="addProductButton" type="button">＋ Add product</button>
+            </div>
+
+            <div class="data-notice" role="note">
+              <strong>Protected writes.</strong> Product changes use the signed-in Supabase client and depend on the database's RLS policies. Availability is managed manually; quantities are not tracked.
+            </div>
+
+            <div class="toolbar">
+              <label class="search-field">
+                <span>Search products</span>
+                <input id="productSearch" type="search" placeholder="Name, category or SKU" autocomplete="off">
+              </label>
+              <label class="filter-field">
+                <span>Category</span>
+                <select id="categoryFilter">
+                  <option value="all">All categories</option>
+                </select>
+              </label>
+              <label class="filter-field">
+                <span>Product status</span>
+                <select id="productArchiveFilter">
+                  <option value="active">Active products</option>
+                  <option value="archived">Archived products</option>
+                </select>
+              </label>
+            </div>
+
+            <p class="result-status" id="productStatus" role="status" aria-live="polite">Loading products…</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Selling unit</th>
+                    <th scope="col" id="productPriceHeading">Price (FCFA)</th>
+                    <th scope="col">Availability</th>
+                    <th scope="col">Publishing</th>
+                    <th scope="col">Archive status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="productRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" data-admin-view="orders" aria-labelledby="ordersHeading" hidden>
+          <section class="panel placeholder-panel">
+            <p class="eyebrow">RETAIL</p>
+            <h2 id="ordersHeading">Orders</h2>
+            <span class="section-status">Not connected</span>
+            <p>There is no order database or order-processing API connected. Current retail checkout remains a WhatsApp enquiry.</p>
+          </section>
+        </section>
+
+        <section class="view" data-admin-view="quotations" aria-labelledby="quotationsHeading" hidden>
+          <section class="panel placeholder-panel">
+            <p class="eyebrow">WHOLESALE</p>
+            <h2 id="quotationsHeading">Wholesale quotations</h2>
+            <span class="section-status">Not connected</span>
+            <p>Quotation requests currently open WhatsApp and are not stored in an admin queue.</p>
+          </section>
+        </section>
+
+        <section class="view" data-admin-view="settings" aria-labelledby="settingsHeading" hidden>
+          <section class="panel settings-panel">
+            <div class="panel-heading settings-heading">
+              <div>
+                <p class="eyebrow">CONFIGURATION</p>
+                <h2 id="settingsHeading">Settings Center</h2>
+                <p class="panel-description">Storefront settings are public business information. Private preferences and administrator controls are protected separately.</p>
+              </div>
+              <button class="button button-secondary" id="reloadSettingsButton" type="button">Reload settings</button>
+            </div>
+            <div class="data-notice" role="note">
+              <strong>Protected controls.</strong> Role changes, permission changes and settings writes are authorized by Supabase database functions and RLS. Infrastructure credentials and an SQL console are never exposed here.
+            </div>
+            <p class="settings-status" id="settingsStatus" role="status" aria-live="polite">Loading settings…</p>
+            <div class="settings-layout">
+              <nav class="settings-categories" id="settingsCategories" aria-label="Settings categories"></nav>
+              <div class="settings-content" id="settingsContent" aria-live="polite">
+                <p class="empty-state">Loading your authorized settings…</p>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="editor-dialog" id="productEditor" aria-labelledby="editorTitle" aria-describedby="editorNotice">
+    <form class="editor-form" id="productForm">
+      <header class="editor-header">
+        <div>
+          <p class="eyebrow">PRODUCT MANAGEMENT</p>
+          <h2 id="editorTitle">Add product</h2>
+        </div>
+        <button class="icon-button" id="closeEditorButton" type="button" aria-label="Close product form">×</button>
+      </header>
+      <p class="data-notice" id="editorNotice">Changes are submitted with your authenticated Supabase session. Existing RLS policies remain authoritative.</p>
+      <div class="editor-grid">
+        <label><span>Database ID (generated by Supabase)</span><input id="fieldId" type="text" autocomplete="off" readonly></label>
+        <label><span>SKU (optional)</span><input id="fieldSku" type="text" autocomplete="off"></label>
+        <label><span>Product name</span><input id="fieldTitle" type="text" required></label>
+        <label><span>Category</span><input id="fieldCategory" type="text" required></label>
+        <label class="field-wide"><span>Image URL</span><input id="fieldImage" type="text"></label>
+        <div class="field-wide image-upload-field">
+          <label for="productImageFile">Upload product image</label>
+          <input
+            id="productImageFile"
+            type="file"
+            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            aria-describedby="imageUploadHelp imageUploadStatus">
+          <small class="image-upload-help" id="imageUploadHelp">JPG, JPEG, PNG or WEBP. Maximum file size: 5 MB. Uploads require the public product-images bucket and administrator-only Storage policies.</small>
+          <div class="image-preview" id="imagePreview" hidden>
+            <img id="imagePreviewImage" alt="Product image preview">
+            <span id="imagePreviewLabel"></span>
+          </div>
+          <progress id="imageUploadProgress" max="100" value="0" aria-label="Image upload progress" hidden></progress>
+          <p class="image-upload-status" id="imageUploadStatus" role="status" aria-live="polite"></p>
+        </div>
+        <label class="field-wide"><span>Gallery image paths (one per line)</span><textarea id="fieldGallery" rows="2"></textarea></label>
+        <label class="field-wide"><span>Description</span><textarea id="fieldDescription" rows="3"></textarea></label>
+        <label><span>Selling unit</span><input id="fieldUnit" type="text" required></label>
+        <label><span>Retail price (<span id="editorCurrencyLabel">FCFA</span>; leave blank if unconfirmed)</span><input id="fieldPrice" type="number" min="0" step="any" inputmode="decimal"></label>
+        <label><span>Minimum quantity</span><input id="fieldMinimum" type="number" min="0" step="any" inputmode="decimal" required></label>
+        <label><span>Quantity increment</span><input id="fieldStep" type="number" min="0" step="any" inputmode="decimal" required></label>
+        <label><span>Availability</span>
+          <select id="fieldStockStatus" required>
+            <option value="" disabled>Confirm availability to save</option>
+            <option value="in_stock">IN STOCK</option>
+            <option value="out_of_stock">OUT OF STOCK</option>
+          </select>
+        </label>
+        <label class="checkbox-field"><input id="fieldFeatured" type="checkbox"><span>Featured product</span></label>
+        <label class="checkbox-field"><input id="fieldPublished" type="checkbox"><span>Published on storefront</span></label>
+      </div>
+      <p class="editor-message" id="editorMessage" role="status" aria-live="polite"></p>
+      <div class="editor-footer">
+        <button class="button button-secondary" id="cancelEditorButton" type="button">Close</button>
+        <button class="button button-primary" id="saveProductButton" type="submit">Save product</button>
+      </div>
+      <p class="editor-footnote">Availability is a manually managed status. Supabase RLS must authorize this administrator for each write.</p>
+    </form>
+  </dialog>
+
+  <dialog
+    class="archive-dialog"
+    id="archiveConfirmationDialog"
+    aria-labelledby="archiveConfirmationTitle"
+    aria-describedby="archiveConfirmationDescription archiveConfirmationMessage">
+    <div class="archive-dialog-content">
+      <header class="archive-dialog-header">
+        <div>
+          <p class="eyebrow">PRODUCT MANAGEMENT</p>
+          <h2 id="archiveConfirmationTitle">Archive product?</h2>
+        </div>
+      </header>
+      <p class="archive-product-name" id="archiveConfirmationProductName"></p>
+      <p id="archiveConfirmationDescription"></p>
+      <p class="archive-confirmation-message" id="archiveConfirmationMessage" role="status" aria-live="polite"></p>
+      <div class="archive-dialog-actions">
+        <button class="button button-secondary" id="cancelArchiveButton" type="button">Cancel</button>
+        <button class="button button-primary archive-confirm-button" id="confirmArchiveButton" type="button">Archive product</button>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>

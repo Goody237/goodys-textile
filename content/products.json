@@ -1,39 +1,84 @@
+
 {
   "products": [
     {
+      "id": "blue-floral-designer",
+      "supabase_id": "d45c133a-24e0-4567-b2b9-9a40e199f2c9",
+      "sku": null,
       "title": "Blue Floral Designer",
       "category": "Designer Fabrics",
       "image": "/assets/designer-floral.jpg",
+      "gallery": [
+        "/assets/designer-floral.jpg"
+      ],
       "description": "A bold floral designer fabric with deep blue, cream and warm red accents.",
       "featured": true,
-      "status": "Available \u2014 confirm current stock",
+      "selling_unit": "meter",
+      "price": null,
+      "quantity_step": 0.25,
+      "minimum_quantity": 0.5,
+      "stock_quantity": null,
+      "stock_status": "out_of_stock",
       "whatsapp_text": "Hello Goodys Textile, I am interested in the Blue Floral Designer fabric."
     },
     {
+      "id": "green-patterned-designer",
+      "supabase_id": "6757649a-a830-4a72-93f2-e1d459019248",
+      "sku": null,
       "title": "Green Patterned Designer",
       "category": "Designer Fabrics",
       "image": "/assets/designer-green.jpg",
+      "gallery": [
+        "/assets/designer-green.jpg"
+      ],
       "description": "A clean white-and-green patterned designer fabric for distinctive fashion pieces.",
       "featured": true,
-      "status": "Available \u2014 confirm current stock",
+      "selling_unit": "meter",
+      "price": null,
+      "quantity_step": 0.25,
+      "minimum_quantity": 0.5,
+      "stock_quantity": null,
+      "stock_status": "out_of_stock",
       "whatsapp_text": "Hello Goodys Textile, I am interested in the Green Patterned Designer fabric."
     },
     {
+      "id": "satin-designers",
+      "supabase_id": "573d0b01-3eef-4bd1-8979-a1f6451fd502",
+      "sku": null,
       "title": "Satin Designers",
       "category": "Satin Designers",
       "image": "/assets/designer-floral.jpg",
+      "gallery": [
+        "/assets/designer-floral.jpg"
+      ],
       "description": "Premium designer satin options, including Flowerish Original Satin and related styles.",
       "featured": false,
-      "status": "Ask for current selection",
+      "selling_unit": "meter",
+      "price": null,
+      "quantity_step": 0.25,
+      "minimum_quantity": 0.5,
+      "stock_quantity": null,
+      "stock_status": "out_of_stock",
       "whatsapp_text": "Hello Goodys Textile, please show me your current Satin Designers selection."
     },
     {
+      "id": "premium-suiting",
+      "supabase_id": "1583348a-2c3a-403e-8634-92ff210410f6",
+      "sku": null,
       "title": "Premium Suiting",
       "category": "Super 100 & Super 360",
       "image": "/assets/store-interior.jpg",
+      "gallery": [
+        "/assets/store-interior.jpg"
+      ],
       "description": "Premium suiting fabrics for polished tailoring and formal wear.",
       "featured": false,
-      "status": "Ask for current selection",
+      "selling_unit": "meter",
+      "price": null,
+      "quantity_step": 0.25,
+      "minimum_quantity": 0.5,
+      "stock_quantity": null,
+      "stock_status": "out_of_stock",
       "whatsapp_text": "Hello Goodys Textile, I am interested in Super 100 and Super 360 suiting fabrics."
     }
   ]
